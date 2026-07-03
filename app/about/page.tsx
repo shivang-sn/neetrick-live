@@ -47,7 +47,7 @@ export default function AboutPage() {
             <Reveal
               key={v.title}
               delay={i * 0.05}
-              className="rounded-xl border border-[#1c1c20] p-6 transition-colors hover:border-accent"
+              className="rounded-xl border border-line p-6 transition-colors hover:border-accent"
             >
               <h3 className="display text-2xl text-accent">{v.title}</h3>
               <p className="mt-3 text-muted">{v.text}</p>
@@ -62,7 +62,7 @@ export default function AboutPage() {
           <Reveal
             key={t.year}
             delay={i * 0.05}
-            className="grid grid-cols-[auto_1fr] gap-8 border-t border-[#1c1c20] py-8"
+            className="grid grid-cols-[auto_1fr] gap-8 border-t border-line py-8"
           >
             <span className="display text-3xl text-accent">{t.year}</span>
             <p className="text-fluid-body text-muted">{t.text}</p>

@@ -37,7 +37,7 @@ export default function ServiceDetail({
           <div className="kicker mb-6">What&apos;s included</div>
           <ul className="space-y-4">
             {service.deliverables.map((d) => (
-              <Reveal key={d} as="li" className="flex items-center gap-4 border-b border-[#1c1c20] pb-4">
+              <Reveal key={d} as="li" className="flex items-center gap-4 border-b border-line pb-4">
                 <span className="text-accent">✦</span>
                 <span className="display text-2xl">{d}</span>
               </Reveal>

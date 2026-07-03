@@ -40,7 +40,7 @@ export default function CareersTeaser() {
               }}
               onMouseLeave={() => setHovered(null)}
               onClick={() => play("click")}
-              className="flex items-center justify-between border-t border-[#1c1c20] py-6 transition-all last:border-b"
+              className="flex items-center justify-between border-t border-line py-6 transition-all last:border-b"
               style={{
                 paddingLeft: hovered === i ? 16 : 0,
                 color: hovered === i ? "var(--accent)" : undefined,

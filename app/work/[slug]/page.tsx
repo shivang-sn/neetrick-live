@@ -51,7 +51,7 @@ export default function CaseStudy({ params }: { params: { slug: string } }) {
 
       <section className="container-x grid gap-6 pb-24 md:grid-cols-3">
         {results.map((r) => (
-          <Reveal key={r.label} className="border-t border-[#1c1c20] pt-6">
+          <Reveal key={r.label} className="border-t border-line pt-6">
             <div className="display text-[clamp(2.5rem,6vw,4rem)] text-accent">
               {r.value}
             </div>

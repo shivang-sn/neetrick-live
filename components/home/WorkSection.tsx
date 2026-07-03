@@ -48,7 +48,7 @@ export default function WorkSection() {
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
               onClick={() => play("click")}
-              className="group flex items-center justify-between gap-6 border-t border-white/10 py-8 last:border-b"
+              className="group flex items-center justify-between gap-6 border-t border-line py-8 last:border-b"
             >
               <div className="flex items-baseline gap-6">
                 <span className="kicker">{w.year}</span>
@@ -63,7 +63,7 @@ export default function WorkSection() {
                 {w.tags.map((t) => (
                   <span
                     key={t}
-                    className="rounded-full border border-white/15 px-3 py-1 text-xs text-muted"
+                    className="rounded-full border border-line px-3 py-1 text-xs text-muted"
                   >
                     {t}
                   </span>

@@ -81,15 +81,20 @@ export default function Loader() {
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/brand/light-header-logo.svg"
+            src="/brand/logo.svg"
             alt="Neetrick"
-            className="w-[min(70vw,420px)]"
-            style={{
-              animation: "loaderLogo 1s cubic-bezier(0.2,1,0.3,1) both",
-            }}
+            className="logo-dark w-[min(70vw,420px)]"
+            style={{ animation: "loaderLogo 1s cubic-bezier(0.2,1,0.3,1) both" }}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo-on-light.svg"
+            alt="Neetrick"
+            className="logo-light w-[min(70vw,420px)]"
+            style={{ animation: "loaderLogo 1s cubic-bezier(0.2,1,0.3,1) both" }}
           />
           <div
-            className="mt-10 h-px w-[min(60vw,360px)] overflow-hidden bg-white/10"
+            className="mt-10 h-px w-[min(60vw,360px)] overflow-hidden bg-surface-2"
           >
             <div
               className="h-full bg-accent"

@@ -11,7 +11,7 @@ export default function SoundToggle() {
         onClick={toggle}
         data-cursor="link"
         aria-label={enabled ? "Mute sound" : "Enable sound"}
-        className="flex h-10 items-center gap-[3px] rounded-full border border-[#2a2a2e] px-4 hover:border-accent transition-colors"
+        className="flex h-10 items-center gap-[3px] rounded-full border border-line px-4 hover:border-accent transition-colors"
       >
         {[0, 1, 2, 3].map((i) => (
           <span

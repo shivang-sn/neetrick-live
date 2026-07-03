@@ -10,10 +10,14 @@ const config: Config = {
       colors: {
         bg: "var(--bg)",
         surface: "var(--surface)",
+        "surface-2": "var(--surface-2)",
         text: "var(--text)",
         muted: "var(--muted)",
         accent: "var(--accent)",
         "accent-2": "var(--accent-2)",
+        line: "var(--border)",
+        overlay: "var(--overlay)",
+        faint: "var(--faint)",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],

@@ -3,6 +3,7 @@ import Trust from "@/components/home/Trust";
 import Intro from "@/components/home/Intro";
 import ServicesSection from "@/components/home/ServicesSection";
 import WorkSection from "@/components/home/WorkSection";
+import Showreel from "@/components/home/Showreel";
 import ProcessSection from "@/components/home/ProcessSection";
 import StatsSection from "@/components/home/StatsSection";
 import AboutTeaser from "@/components/home/AboutTeaser";
@@ -18,6 +19,7 @@ export default function Home() {
       <Intro />
       <ServicesSection />
       <WorkSection />
+      <Showreel />
       <ProcessSection />
       <StatsSection />
       <AboutTeaser />

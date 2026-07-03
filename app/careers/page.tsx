@@ -29,12 +29,12 @@ export default function CareersPage() {
       <Marquee
         items={["DESIGN", "ENGINEERING", "MARKETING", "CONTENT", "STRATEGY"]}
         duration={24}
-        className="display border-y border-[#1c1c20] py-5 text-[clamp(1.5rem,4vw,3rem)] text-[#2a2a2e]"
+        className="display border-y border-line py-5 text-[clamp(1.5rem,4vw,3rem)] text-faint"
       />
 
       <section className="section-pad grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {PERKS.map((p, i) => (
-          <Reveal key={p.title} delay={i * 0.05} className="border-t border-[#1c1c20] pt-6">
+          <Reveal key={p.title} delay={i * 0.05} className="border-t border-line pt-6">
             <h3 className="display text-2xl">{p.title}</h3>
             <p className="mt-3 text-muted">{p.text}</p>
           </Reveal>
@@ -48,7 +48,7 @@ export default function CareersPage() {
             key={r.slug}
             href={`/careers/${r.slug}`}
             data-cursor="link"
-            className="group grid items-center gap-4 border-t border-[#1c1c20] py-8 last:border-b md:grid-cols-[1fr_auto_auto_auto]"
+            className="group grid items-center gap-4 border-t border-line py-8 last:border-b md:grid-cols-[1fr_auto_auto_auto]"
           >
             <span className="display text-2xl transition-colors group-hover:text-accent md:text-3xl">
               {r.title}

@@ -1,7 +1,70 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import type { Transporter } from "nodemailer";
 
 export const runtime = "nodejs";
+
+// ---------- helpers ----------
+function makeTransport(port: number): Transporter {
+  const { SMTP_HOST, SMTP_USER, SMTP_PASS } = process.env;
+  return nodemailer.createTransport({
+    host: SMTP_HOST,
+    port,
+    secure: port === 465, // 465 = implicit TLS, 587 = STARTTLS
+    requireTLS: port === 587,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+    connectionTimeout: 15000,
+    greetingTimeout: 10000,
+    socketTimeout: 20000,
+  });
+}
+
+type SmtpErr = {
+  code?: string;
+  responseCode?: number;
+  response?: string;
+  command?: string;
+  message?: string;
+};
+
+// Health check + optional live SMTP auth test.
+// GET /api/contact            -> { configured }
+// GET /api/contact?verify=1   -> also attempts SMTP login (465 then 587)
+export async function GET(req: Request) {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
+  const configured = Boolean(SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS);
+
+  const wantVerify = new URL(req.url).searchParams.get("verify") === "1";
+  if (!wantVerify || !configured) {
+    return NextResponse.json({
+      configured,
+      host: SMTP_HOST || null,
+      port: SMTP_PORT || null,
+      testMode: process.env.SMTP_TEST === "1",
+    });
+  }
+
+  // Try to authenticate on 465, then 587.
+  for (const port of [465, 587]) {
+    try {
+      await makeTransport(port).verify();
+      return NextResponse.json({ configured, smtpOk: true, port });
+    } catch (err) {
+      const e = err as SmtpErr;
+      if (port === 587) {
+        return NextResponse.json({
+          configured,
+          smtpOk: false,
+          code: e.code,
+          responseCode: e.responseCode,
+          response: e.response,
+          message: e.message,
+        });
+      }
+    }
+  }
+  return NextResponse.json({ configured, smtpOk: false });
+}
 
 type ContactPayload = {
   name?: string;
@@ -37,10 +100,7 @@ function rateLimited(ip: string) {
 
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 const esc = (v = "") =>
-  v
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+  v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 export async function POST(req: Request) {
   let body: ContactPayload;
@@ -93,42 +153,11 @@ export async function POST(req: Request) {
   }
 
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO } = process.env;
-
-  // Test mode: send to a throwaway Ethereal inbox and return a preview URL.
-  // Enable by setting SMTP_TEST=1 — lets you verify the full flow without real
-  // credentials. Never active unless the flag is explicitly set.
   const testMode = process.env.SMTP_TEST === "1";
 
-  let transporter;
-  let fromUser = SMTP_USER || "sales@neetrick.com";
-
-  if (testMode) {
-    const testAcc = await nodemailer.createTestAccount();
-    fromUser = testAcc.user;
-    transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false,
-      auth: { user: testAcc.user, pass: testAcc.pass },
-    });
-  } else {
-    if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
-      return NextResponse.json(
-        { ok: false, error: "Email is not configured on the server." },
-        { status: 500 }
-      );
-    }
-    transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: Number(SMTP_PORT),
-      secure: Number(SMTP_PORT) === 465,
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
-    });
-  }
-
-  const when = new Date().toLocaleString("en-IN", {
-    timeZone: "Asia/Kolkata",
-  });
+  const to = CONTACT_TO || SMTP_USER || "sales@neetrick.com";
+  const subject = `New enquiry from ${name} — Neetrick.com`;
+  const when = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
   const interests = (body.interests || []).join(", ") || "—";
 
   const row = (label: string, value?: string) =>
@@ -156,26 +185,83 @@ export async function POST(req: Request) {
     </table>
   </div>`;
 
-  try {
-    const info = await transporter.sendMail({
-      from: `"Neetrick Website" <${fromUser}>`,
-      to: CONTACT_TO || SMTP_USER || fromUser,
+  // ---------- 1) Test mode (Ethereal) ----------
+  if (testMode) {
+    const testAcc = await nodemailer.createTestAccount();
+    const t = nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false,
+      auth: { user: testAcc.user, pass: testAcc.pass },
+    });
+    const info = await t.sendMail({
+      from: `"Neetrick Website" <${testAcc.user}>`,
+      to,
       replyTo: `"${name}" <${email}>`,
-      subject: `New enquiry from ${name} — Neetrick.com`,
+      subject,
       html,
     });
-    if (testMode) {
-      return NextResponse.json({
-        ok: true,
-        preview: nodemailer.getTestMessageUrl(info),
-      });
-    }
-    return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("Contact email failed:", err);
+    return NextResponse.json({ ok: true, preview: nodemailer.getTestMessageUrl(info) });
+  }
+
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
     return NextResponse.json(
-      { ok: false, error: "Could not send your message. Please try again." },
+      { ok: false, error: "Email is not configured on the server." },
       { status: 500 }
     );
   }
+
+  // ---------- 2) Titan SMTP with 465 -> 587 fallback ----------
+  const preferred = Number(SMTP_PORT) === 587 ? [587, 465] : [465, 587];
+  let lastErr: SmtpErr | undefined;
+  for (const port of preferred) {
+    try {
+      await makeTransport(port).sendMail({
+        from: `"Neetrick Website" <${SMTP_USER}>`,
+        to,
+        replyTo: `"${name}" <${email}>`,
+        subject,
+        html,
+      });
+      return NextResponse.json({ ok: true });
+    } catch (err) {
+      lastErr = err as SmtpErr;
+      console.error(
+        `[contact] SMTP send failed on port ${port}:`,
+        "code=", lastErr.code,
+        "responseCode=", lastErr.responseCode,
+        "response=", lastErr.response,
+        "command=", lastErr.command
+      );
+    }
+  }
+
+  // ---------- 3) Optional Resend fallback ----------
+  if (process.env.RESEND_API_KEY) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: process.env.RESEND_FROM || "Neetrick <onboarding@resend.dev>",
+          to: [to],
+          reply_to: email,
+          subject,
+          html,
+        }),
+      });
+      if (res.ok) return NextResponse.json({ ok: true, via: "resend" });
+      console.error("[contact] Resend failed:", res.status, await res.text());
+    } catch (err) {
+      console.error("[contact] Resend threw:", err);
+    }
+  }
+
+  return NextResponse.json(
+    { ok: false, error: "Could not send your message. Please try again." },
+    { status: 500 }
+  );
 }

@@ -23,7 +23,7 @@ export default function ServicesPage() {
             <Link
               href={`/services/${s.slug}`}
               data-cursor="link"
-              className="group grid items-center gap-6 border-t border-[#1c1c20] py-12 last:border-b md:grid-cols-[auto_1fr_auto]"
+              className="group grid items-center gap-6 border-t border-line py-12 last:border-b md:grid-cols-[auto_1fr_auto]"
             >
               <span className="kicker">{s.no}</span>
               <div>

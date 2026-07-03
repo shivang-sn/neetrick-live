@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 import { SoundProvider } from "@/providers/SoundProvider";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
@@ -40,19 +41,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${display.variable} ${body.variable} ${mono.variable}`}
       >
-        <SoundProvider>
-          <Loader />
-          <Cursor />
-          <SmoothScroll>
-            <Nav />
-            <main>{children}</main>
-            <Footer />
-          </SmoothScroll>
-        </SoundProvider>
+        <ThemeProvider>
+          <SoundProvider>
+            <Loader />
+            <Cursor />
+            <SmoothScroll>
+              <Nav />
+              <main>{children}</main>
+              <Footer />
+            </SmoothScroll>
+          </SoundProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

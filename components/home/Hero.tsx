@@ -1,11 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 import { SITE } from "@/lib/content";
 import { useSound } from "@/providers/SoundProvider";
 import Marquee from "../Marquee";
 import Magnetic from "../Magnetic";
+import HeroScrollBadge from "./HeroScrollBadge";
+
+// WebGL/particle background — client-only so it never breaks SSR/build.
+const HeroParticles = dynamic(() => import("./HeroParticles"), {
+  ssr: false,
+});
 
 export default function Hero() {
   const { play } = useSound();
@@ -28,20 +35,18 @@ export default function Hero() {
 
   return (
     <section className="relative flex min-h-screen flex-col justify-end overflow-hidden pb-0 pt-32">
-      {/* Background video */}
-      <video
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40"
-        src="/video/hero.mp4"
-        muted
-        playsInline
-        autoPlay
-        preload="auto"
-      />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg/70 via-bg/60 to-bg" />
+      {/* Interactive particle background */}
+      <div className="absolute inset-0 z-0">
+        <HeroParticles />
+      </div>
 
-      {/* Accent glow + orbit */}
+      {/* Accent glow */}
       <div className="pointer-events-none absolute right-[-10%] top-[8%] h-[60vh] w-[60vh] rounded-full bg-accent/25 blur-[130px]" />
-      <div className="pointer-events-none absolute right-[8%] top-[16%] h-32 w-32 rounded-full border border-accent/40 animate-[spin_20s_linear_infinite]" />
+
+      {/* Clickable scroll badge (replaces the old bare ring) */}
+      <div className="absolute right-[6%] top-[14%] z-10 hidden md:block">
+        <HeroScrollBadge />
+      </div>
 
       <div className="container-x relative z-10">
         <div className="kicker mb-8 flex gap-6">
@@ -106,7 +111,7 @@ export default function Hero() {
           "CONTENT",
         ]}
         duration={22}
-        className="display relative z-10 mt-16 border-y border-white/10 py-5 text-[clamp(1.5rem,4vw,3rem)]"
+        className="display relative z-10 mt-16 border-y border-line py-5 text-[clamp(1.5rem,4vw,3rem)]"
       />
 
       <style>{`

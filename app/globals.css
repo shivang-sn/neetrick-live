@@ -2,13 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ---- Theme tokens ---- */
+/* Dark is the default (matches next-themes defaultTheme="dark"), so :root
+   holds the dark palette to avoid any flash before hydration. */
+:root,
+[data-theme="dark"] {
   --bg: #07060a;
   --surface: #0f0d16;
+  --surface-2: #17141f;
   --text: #f4f2ec;
   --muted: #8a8693;
   --accent: #743bfb;
   --accent-2: #14101f;
+  --border: rgba(255, 255, 255, 0.1);
+  --overlay: rgba(0, 0, 0, 0.6);
+  --faint: #1e1b28;
+}
+
+[data-theme="light"] {
+  --bg: #f5f3ec;
+  --surface: #ffffff;
+  --surface-2: #ece8df;
+  --text: #16121f;
+  --muted: #6b6772;
+  --accent: #743bfb;
+  --accent-2: #eae6dd;
+  --border: rgba(0, 0, 0, 0.12);
+  --overlay: rgba(0, 0, 0, 0.35);
+  --faint: #ded9cf;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 * {
@@ -54,7 +83,7 @@ html.lenis body {
   background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2e;
+  background: var(--surface-2);
   border-radius: 4px;
 }
 
@@ -188,6 +217,17 @@ html.lenis body {
 @keyframes vmove {
   from { transform: translateY(0); }
   to { transform: translateY(-22%); }
+}
+
+/* Theme-aware logo swap: white logo on dark, dark logo on light */
+.logo-light {
+  display: none;
+}
+[data-theme="light"] .logo-light {
+  display: block;
+}
+[data-theme="light"] .logo-dark {
+  display: none;
 }
 
 /* Marquees and signature motion run regardless of the reduced-motion

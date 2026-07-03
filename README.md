@@ -22,6 +22,41 @@ npm run build    # production build
 npm start        # serve production build
 ```
 
+## Theme (light / dark)
+- Powered by `next-themes` (`attribute="data-theme"`, default **dark**, follows system on first visit).
+- Toggle is the sun/moon switch in the header; choice persists in `localStorage`.
+- Colors are CSS variables in `app/globals.css` — edit `:root`/`[data-theme="dark"]`
+  and `[data-theme="light"]` blocks. Tailwind tokens: `bg`, `surface`, `surface-2`,
+  `text`, `muted`, `accent`, `line` (borders), `overlay`, `faint`.
+
+## Contact email (GoDaddy Titan → sales@neetrick.com)
+- SMTP config lives in `.env.local` (git-ignored). Template: `.env.local.example`.
+  ```
+  SMTP_HOST=smtp.titan.email
+  SMTP_PORT=465            # try 587 if 465 fails
+  SMTP_USER=sales@neetrick.com
+  SMTP_PASS=your-mailbox-password
+  CONTACT_TO=sales@neetrick.com
+  ```
+- **Restart the server after editing `.env.local`** — Next.js reads env only at startup.
+- Health check: `GET /api/contact` → `{ "configured": true }` when SMTP env is loaded.
+- **Live login test:** `GET /api/contact?verify=1` actually attempts SMTP auth
+  (tries port 465, then 587) and returns `{ "smtpOk": true }` or the exact error
+  code — so you can confirm the mailbox login **without** submitting the form.
+  A `535` / `EAUTH` here means the password is wrong or the mailbox isn't activated.
+- Sending tries port 465 then automatically falls back to 587 (STARTTLS).
+- **Optional Resend fallback:** if Titan SMTP can't authenticate, set
+  `RESEND_API_KEY` (and optionally `RESEND_FROM`) in `.env.local`; the route will
+  deliver via Resend when SMTP fails.
+- Local test without real credentials: `SMTP_TEST=1 npm start`, submit the form,
+  and the API returns an `ethereal.email` preview link showing the exact email.
+- Real delivery needs a fully-activated mailbox + correct password (Titan returns
+  `535 authentication failed` if the login is wrong or the mailbox isn't activated).
+
+## Favicon / icons
+- Favicon: `app/icon.svg` (auto-detected by Next). To add an iOS icon, drop a
+  180×180 `app/apple-icon.png`.
+
 ## What's built
 - **Premium loader** — 0→100 counter, rotating kicker, shutter-panel reveal (first visit per session)
 - **Custom cursor** — magnetic dot + ring with `VIEW` labels on work items

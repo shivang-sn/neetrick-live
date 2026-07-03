@@ -82,7 +82,7 @@ export default function ContactForm({
   }
 
   const field =
-    "w-full border-b border-[#2a2a2e] bg-transparent py-3 text-text outline-none transition-colors focus:border-accent placeholder:text-muted";
+    "w-full border-b border-line bg-transparent py-3 text-text outline-none transition-colors focus:border-accent placeholder:text-muted";
 
   return (
     <form onSubmit={submit} className="space-y-8">
@@ -187,7 +187,7 @@ export default function ContactForm({
                 }}
                 className="rounded-full border px-4 py-2 text-sm transition-colors"
                 style={{
-                  borderColor: budget === b ? "var(--accent)" : "#2a2a2e",
+                  borderColor: budget === b ? "var(--accent)" : "var(--border)",
                   color: budget === b ? "var(--accent)" : "var(--muted)",
                 }}
               >
@@ -212,7 +212,7 @@ export default function ContactForm({
                 style={{
                   borderColor: interests.includes(it)
                     ? "var(--accent)"
-                    : "#2a2a2e",
+                    : "var(--border)",
                   color: interests.includes(it)
                     ? "var(--accent)"
                     : "var(--muted)",

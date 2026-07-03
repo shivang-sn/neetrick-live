@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { NAV_LINKS, SITE } from "@/lib/content";
 import { useSound } from "@/providers/SoundProvider";
 import Magnetic from "./Magnetic";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -40,7 +41,7 @@ export default function Nav() {
           hidden ? "-translate-y-full" : "translate-y-0"
         } ${
           scrolled && !open
-            ? "bg-bg/70 backdrop-blur-xl border-b border-white/5"
+            ? "bg-bg/70 backdrop-blur-xl border-b border-line"
             : "bg-transparent"
         }`}
       >
@@ -54,23 +55,31 @@ export default function Nav() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/brand/light-header-logo.svg"
-                alt="Neetrick new"
-                className="h-7 w-auto md:h-8"
+                src="/brand/logo.svg"
+                alt="Neetrick"
+                className="logo-dark h-7 w-auto md:h-8"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/brand/logo-on-light.svg"
+                alt="Neetrick"
+                className="logo-light h-7 w-auto md:h-8"
               />
             </Link>
           </Magnetic>
 
-          <button
-            onClick={toggleMenu}
-            data-cursor="link"
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="group flex items-center gap-3"
-          >
-            <span className="kicker hidden sm:block">
-              {open ? "Close" : "Menu"}
-            </span>
-            <span className="flex h-10 w-10 flex-col items-center justify-center gap-[6px] rounded-full border border-white/15 transition-colors group-hover:border-accent">
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <button
+              onClick={toggleMenu}
+              data-cursor="link"
+              aria-label={open ? "Close menu" : "Open menu"}
+              className="group flex items-center gap-3"
+            >
+              <span className="kicker hidden sm:block">
+                {open ? "Close" : "Menu"}
+              </span>
+              <span className="flex h-10 w-10 flex-col items-center justify-center gap-[6px] rounded-full border border-line transition-colors group-hover:border-accent">
               <span
                 className={`h-px w-5 bg-text transition-all duration-300 ${
                   open ? "translate-y-[3.5px] rotate-45" : ""
@@ -81,15 +90,16 @@ export default function Nav() {
                   open ? "-translate-y-[3.5px] -rotate-45" : ""
                 }`}
               />
-            </span>
-          </button>
+              </span>
+            </button>
+          </div>
         </div>
       </header>
 
       {/* Full-screen overlay menu — driven by inline styles so it never
           depends on Tailwind JIT generating arbitrary clip-path utilities. */}
       <div
-        className="fixed inset-0 z-40 bg-bg"
+        className="fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-bg"
         style={{
           clipPath: open
             ? "circle(150% at 100% 0)"
@@ -98,8 +108,8 @@ export default function Nav() {
           pointerEvents: open ? "auto" : "none",
         }}
       >
-        <div className="grid h-full grid-rows-[1fr_auto] px-[clamp(1.25rem,5vw,6rem)] pb-10 pt-28">
-          <nav className="flex flex-col justify-center">
+        <div className="flex min-h-[100dvh] flex-col justify-center gap-10 px-[clamp(1.25rem,5vw,6rem)] pb-12 pt-28">
+          <nav className="flex flex-col">
             {NAV_LINKS.map((l, i) => (
               <Link
                 key={l.href}
@@ -109,7 +119,7 @@ export default function Nav() {
                   setOpen(false);
                 }}
                 data-cursor="link"
-                className="menu-item group relative block overflow-hidden border-b border-white/10"
+                className="menu-item group relative block overflow-hidden border-b border-line"
                 style={{
                   opacity: open ? 1 : 0,
                   transform: open ? "translateY(0)" : "translateY(50px)",

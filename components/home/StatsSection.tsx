@@ -47,7 +47,7 @@ function Counter({
   }, [value, play]);
 
   return (
-    <div ref={ref} className="border-t border-[#1c1c20] pt-6">
+    <div ref={ref} className="border-t border-line pt-6">
       <div className="display text-[clamp(3rem,8vw,6rem)] leading-none">
         {display.toFixed(decimals)}
         <span className="text-accent">{suffix}</span>

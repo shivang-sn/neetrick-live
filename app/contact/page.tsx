@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import ContactForm from "@/components/ContactForm";
+import Faq from "@/components/Faq";
 import { SITE } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Contact — Neetrick",
   description: "Tell us about your project. Based in Jamnagar, Gujarat.",
 };
-
-const FAQ = [
-  { q: "How do you engage?", a: "Retainers, fixed-scope projects, or focused sprints — whatever fits." },
-  { q: "What's your timeline?", a: "Most projects kick off within two weeks of sign-off." },
-  { q: "Where are you based?", a: "Jamnagar, Gujarat — working with clients everywhere." },
-];
 
 export default function ContactPage() {
   return (
@@ -53,15 +48,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="section-pad">
-        <div className="kicker mb-10">FAQ</div>
-        {FAQ.map((f) => (
-          <div key={f.q} className="border-t border-[#1c1c20] py-8">
-            <h3 className="display text-2xl">{f.q}</h3>
-            <p className="mt-3 max-w-2xl text-muted">{f.a}</p>
-          </div>
-        ))}
-      </section>
+      <Faq />
     </>
   );
 }

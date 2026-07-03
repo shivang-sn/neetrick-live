@@ -10,15 +10,21 @@ export default function Footer() {
   const { play } = useSound();
 
   return (
-    <footer className="relative border-t border-[#1c1c20] bg-surface">
+    <footer className="relative border-t border-line bg-surface">
       <div className="section-pad !pb-12">
         <div className="grid gap-12 md:grid-cols-[1fr] mb-12 items-center justify-center">
           <div className="flex justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              src="/brand/logo.svg"
+              alt="Neetrick"
+              className="logo-dark h-12 w-auto md:h-14"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/brand/light-footer-logo.svg"
               alt="Neetrick"
-              className="mb-18 h-18 w-auto"
+              className="logo-light h-12 w-auto md:h-14"
             />
           </div>
           <div className="text-center"><h3 className="display text-fluid-h3 ">
@@ -100,7 +106,7 @@ export default function Footer() {
       <Marquee
         items={["SMARTER TRICKS", "BETTER EVERYDAY"]}
         duration={25}
-        className="display border-y border-[#1c1c20] py-6 text-[clamp(2rem,7vw,5rem)] text-[#222226]"
+        className="display border-y border-line py-6 text-[clamp(2rem,7vw,5rem)] text-faint"
       />
 
       <div className="flex flex-col items-center justify-between gap-4 px-[clamp(1.25rem,5vw,6rem)] py-6 text-xs text-muted md:flex-row">

@@ -69,7 +69,7 @@ export default function ServicesSection() {
               ref={(el) => {
                 panelRefs.current[i] = el;
               }}
-              className="flex min-h-[70vh] flex-col justify-center border-b border-white/10"
+              className="flex min-h-[70vh] flex-col justify-center border-b border-line"
             >
               <div className="kicker mb-4 md:hidden">{s.no}</div>
               <h3 className="display text-fluid-h2">{s.title}</h3>
@@ -80,7 +80,7 @@ export default function ServicesSection() {
                 {s.deliverables.map((d) => (
                   <li
                     key={d}
-                    className="rounded-full border border-white/15 px-4 py-1.5 text-sm text-muted"
+                    className="rounded-full border border-line px-4 py-1.5 text-sm text-muted"
                   >
                     {d}
                   </li>

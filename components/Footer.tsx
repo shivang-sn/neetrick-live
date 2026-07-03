@@ -12,16 +12,17 @@ export default function Footer() {
   return (
     <footer className="relative border-t border-[#1c1c20] bg-surface">
       <div className="section-pad !pb-12">
-        <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
-          <div>
+        <div className="grid gap-12 md:grid-cols-[1fr] mb-12 items-center justify-center">
+          <div className="flex justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/brand/logo.svg"
+              src="/brand/light-footer-logo.svg"
               alt="Neetrick"
-              className="mb-8 h-8 w-auto"
+              className="mb-18 h-18 w-auto"
             />
-            <h3 className="display text-fluid-h3 max-w-sm">
-              Got a brief? Let&apos;s make something smarter.
+          </div>
+          <div className="text-center"><h3 className="display text-fluid-h3 ">
+              Got a brief? <br /> Let&apos;s make something smarter.
             </h3>
             <Magnetic className="mt-6 inline-block">
               <Link
@@ -32,10 +33,11 @@ export default function Footer() {
               >
                 Start a project
               </Link>
-            </Magnetic>
-          </div>
+            </Magnetic></div>
+        </div>
+        <div className="grid gap-12 md:grid-cols-[1fr_1fr_1fr]">
 
-          <div>
+          <div className="text-center">
             <div className="kicker mb-4">Menu</div>
             <ul className="space-y-2">
               {NAV_LINKS.map((l) => (
@@ -53,7 +55,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="text-center">
             <div className="kicker mb-4">Services</div>
             <ul className="space-y-2">
               {SERVICES.slice(0, 5).map((s) => (
@@ -71,7 +73,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="text-center">
             <div className="kicker mb-4">Contact</div>
             <ul className="space-y-2 text-muted">
               <li>
@@ -86,7 +88,7 @@ export default function Footer() {
               <li>{SITE.phone}</li>
               <li>{SITE.location}</li>
             </ul>
-            <div className="mt-4 flex gap-4 kicker">
+            <div className="mt-4 flex gap-4 kicker justify-center">
               <a href="#" data-cursor="link" className="hover:text-accent">IG</a>
               <a href="#" data-cursor="link" className="hover:text-accent">IN</a>
               <a href="#" data-cursor="link" className="hover:text-accent">X</a>

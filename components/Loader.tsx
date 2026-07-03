@@ -81,7 +81,7 @@ export default function Loader() {
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/brand/logo.svg"
+            src="/brand/light-header-logo.svg"
             alt="Neetrick"
             className="w-[min(70vw,420px)]"
             style={{

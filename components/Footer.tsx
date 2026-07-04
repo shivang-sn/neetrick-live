@@ -16,15 +16,15 @@ export default function Footer() {
           <div className="flex justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/brand/logo.svg"
+              src="/brand/light-footer-logo.svg"
               alt="Neetrick"
-              className="logo-dark h-12 w-auto md:h-14"
+              className="logo-dark h-34 w-auto sm:h-24 md:h-34"
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/brand/light-footer-logo.svg"
+              src="/brand/dark-footer-logo.svg"
               alt="Neetrick"
-              className="logo-light h-12 w-auto md:h-14"
+              className="logo-light h-34 w-auto sm:h-24 md:h-34"
             />
           </div>
           <div className="text-center"><h3 className="display text-fluid-h3 ">

@@ -55,13 +55,13 @@ export default function Nav() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/brand/logo.svg"
+                src="/brand/light-header-logo.svg"
                 alt="Neetrick"
                 className="logo-dark h-7 w-auto md:h-8"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/brand/logo-on-light.svg"
+                src="/brand/dark-header-logo.svg"
                 alt="Neetrick"
                 className="logo-light h-7 w-auto md:h-8"
               />

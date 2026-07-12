@@ -13,10 +13,24 @@ function makeTransport(port: number): Transporter {
     secure: port === 465, // 465 = implicit TLS, 587 = STARTTLS
     requireTLS: port === 587,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
-    connectionTimeout: 15000,
-    greetingTimeout: 10000,
-    socketTimeout: 20000,
+    connectionTimeout: 8000,
+    greetingTimeout: 8000,
+    socketTimeout: 12000,
   });
+}
+
+// An auth failure (bad password / inactive mailbox) will fail identically on the
+// other port, so we must NOT retry it — only retry genuine connection problems.
+const CONNECTION_ERRORS = new Set([
+  "ECONNECTION",
+  "ETIMEDOUT",
+  "ESOCKET",
+  "ECONNRESET",
+  "EDNS",
+  "EHOSTUNREACH",
+]);
+function isConnectionError(e: SmtpErr) {
+  return e.code ? CONNECTION_ERRORS.has(e.code) : false;
 }
 
 type SmtpErr = {
@@ -80,7 +94,22 @@ type ContactPayload = {
   message?: string;
   company_website?: string; // honeypot (must stay empty)
   source?: string;
+  // careers-only fields
+  role?: string;
+  experience?: string;
+  currentCtc?: string;
+  expectedCtc?: string;
+  currentCompany?: string;
+  linkedin?: string;
+  portfolio?: string;
 };
+
+const CV_TYPES = new Set([
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+]);
+const MAX_CV_SIZE = 5 * 1024 * 1024; // 5MB
 
 // --- tiny in-memory rate limiter (per server instance) ---
 const hits = new Map<string, { count: number; ts: number }>();
@@ -104,8 +133,42 @@ const esc = (v = "") =>
 
 export async function POST(req: Request) {
   let body: ContactPayload;
+  let cvFile: File | null = null;
   try {
-    body = await req.json();
+    const contentType = req.headers.get("content-type") || "";
+    if (contentType.includes("multipart/form-data")) {
+      const fd = await req.formData();
+      const str = (k: string) => {
+        const v = fd.get(k);
+        return typeof v === "string" ? v : undefined;
+      };
+      body = {
+        name: str("name"),
+        email: str("email"),
+        mobile: str("mobile"),
+        company: str("company"),
+        country: str("country"),
+        state: str("state"),
+        city: str("city"),
+        pincode: str("pincode"),
+        budget: str("budget"),
+        interests: fd.getAll("interests").filter((v): v is string => typeof v === "string"),
+        message: str("message"),
+        company_website: str("company_website"),
+        source: str("source"),
+        role: str("role"),
+        experience: str("experience"),
+        currentCtc: str("currentCtc"),
+        expectedCtc: str("expectedCtc"),
+        currentCompany: str("currentCompany"),
+        linkedin: str("linkedin"),
+        portfolio: str("portfolio"),
+      };
+      const cv = fd.get("cv");
+      if (cv instanceof File && cv.size > 0) cvFile = cv;
+    } else {
+      body = await req.json();
+    }
   } catch {
     return NextResponse.json({ ok: false, error: "Invalid request" }, { status: 400 });
   }
@@ -152,11 +215,51 @@ export async function POST(req: Request) {
     );
   }
 
+  const isCareers = body.source === "careers";
+  if (isCareers) {
+    const city = (body.city || "").trim();
+    const experience = (body.experience || "").trim();
+    const currentCtc = (body.currentCtc || "").trim();
+    const expectedCtc = (body.expectedCtc || "").trim();
+    const currentCompany = (body.currentCompany || "").trim();
+    const linkedin = (body.linkedin || "").trim();
+    if (
+      !city ||
+      !experience ||
+      !currentCtc ||
+      !expectedCtc ||
+      !currentCompany ||
+      !linkedin
+    ) {
+      return NextResponse.json(
+        { ok: false, error: "Please fill in all required fields." },
+        { status: 400 }
+      );
+    }
+    if (!cvFile) {
+      return NextResponse.json(
+        { ok: false, error: "Please attach your CV." },
+        { status: 400 }
+      );
+    }
+    if (cvFile.size > MAX_CV_SIZE) {
+      return NextResponse.json(
+        { ok: false, error: "CV file is too large (max 5MB)." },
+        { status: 400 }
+      );
+    }
+    if (cvFile.type && !CV_TYPES.has(cvFile.type)) {
+      return NextResponse.json(
+        { ok: false, error: "CV must be a PDF or Word document." },
+        { status: 400 }
+      );
+    }
+  }
+
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO } = process.env;
   const testMode = process.env.SMTP_TEST === "1";
 
   const to = CONTACT_TO || SMTP_USER || "sales@neetrick.com";
-  const subject = `New enquiry from ${name} — Neetrick.com`;
   const when = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
   const interests = (body.interests || []).join(", ") || "—";
 
@@ -166,10 +269,40 @@ export async function POST(req: Request) {
        <td style="padding:8px 12px;border-bottom:1px solid #eee">${esc(value || "—")}</td>
      </tr>`;
 
-  const html = `
+  const cvBuffer = cvFile ? Buffer.from(await cvFile.arrayBuffer()) : null;
+  const cvName = cvFile ? cvFile.name.replace(/[/\\]/g, "_") || "cv" : "";
+
+  // Two entirely separate templates/subjects so a sales lead and a job
+  // application never look like the same email in the inbox.
+  const subject = isCareers
+    ? `New application — ${body.role || "Role not specified"} — ${name}`
+    : `New sales enquiry from ${name} — Neetrick.com`;
+
+  const html = isCareers
+    ? `
   <div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:auto;color:#111">
-    <h2 style="margin:0 0 4px">New enquiry — Neetrick.com</h2>
-    <p style="margin:0 0 16px;color:#666;font-size:13px">${esc(when)} IST · Source: ${esc(body.source || "contact")}</p>
+    <h2 style="margin:0 0 4px">New job application — Neetrick.com</h2>
+    <p style="margin:0 0 4px;color:#666;font-size:13px">${esc(when)} IST</p>
+    <p style="margin:0 0 16px;font-weight:600">${esc(body.role || "Role not specified")}</p>
+    <table style="width:100%;border-collapse:collapse;font-size:14px">
+      ${row("Name", name)}
+      ${row("Email", email)}
+      ${row("Mobile", mobile)}
+      ${row("City", body.city)}
+      ${row("Total experience", body.experience)}
+      ${row("Current company", body.currentCompany)}
+      ${row("Current CTC", body.currentCtc)}
+      ${row("Expected CTC", body.expectedCtc)}
+      ${row("LinkedIn", body.linkedin)}
+      ${row("Portfolio", body.portfolio)}
+      ${row("Message", message)}
+    </table>
+    <p style="margin-top:16px;color:#666;font-size:13px">CV attached${cvFile ? ` — ${esc(cvName)}` : ""}.</p>
+  </div>`
+    : `
+  <div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:auto;color:#111">
+    <h2 style="margin:0 0 4px">New sales enquiry — Neetrick.com</h2>
+    <p style="margin:0 0 16px;color:#666;font-size:13px">${esc(when)} IST</p>
     <table style="width:100%;border-collapse:collapse;font-size:14px">
       ${row("Name", name)}
       ${row("Email", email)}
@@ -200,43 +333,21 @@ export async function POST(req: Request) {
       replyTo: `"${name}" <${email}>`,
       subject,
       html,
+      attachments: cvBuffer ? [{ filename: cvName, content: cvBuffer }] : undefined,
     });
     return NextResponse.json({ ok: true, preview: nodemailer.getTestMessageUrl(info) });
   }
 
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
+  const hasSmtp = Boolean(SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS);
+
+  if (!process.env.RESEND_API_KEY && !hasSmtp) {
     return NextResponse.json(
       { ok: false, error: "Email is not configured on the server." },
       { status: 500 }
     );
   }
 
-  // ---------- 2) Titan SMTP with 465 -> 587 fallback ----------
-  const preferred = Number(SMTP_PORT) === 587 ? [587, 465] : [465, 587];
-  let lastErr: SmtpErr | undefined;
-  for (const port of preferred) {
-    try {
-      await makeTransport(port).sendMail({
-        from: `"Neetrick Website" <${SMTP_USER}>`,
-        to,
-        replyTo: `"${name}" <${email}>`,
-        subject,
-        html,
-      });
-      return NextResponse.json({ ok: true });
-    } catch (err) {
-      lastErr = err as SmtpErr;
-      console.error(
-        `[contact] SMTP send failed on port ${port}:`,
-        "code=", lastErr.code,
-        "responseCode=", lastErr.responseCode,
-        "response=", lastErr.response,
-        "command=", lastErr.command
-      );
-    }
-  }
-
-  // ---------- 3) Optional Resend fallback ----------
+  // ---------- 2) Resend (primary when a key is set — most reliable, no SMTP) ----
   if (process.env.RESEND_API_KEY) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
@@ -251,12 +362,53 @@ export async function POST(req: Request) {
           reply_to: email,
           subject,
           html,
+          attachments: cvBuffer
+            ? [{ filename: cvName, content: cvBuffer.toString("base64") }]
+            : undefined,
         }),
       });
-      if (res.ok) return NextResponse.json({ ok: true, via: "resend" });
+      if (res.ok) {
+        console.log(`[contact] sent OK via Resend -> ${to}`);
+        return NextResponse.json({ ok: true, via: "resend" });
+      }
       console.error("[contact] Resend failed:", res.status, await res.text());
+      // fall through to SMTP if it's configured
     } catch (err) {
       console.error("[contact] Resend threw:", err);
+    }
+  }
+
+  // ---------- 3) SMTP with 465 -> 587 fallback ----------
+  // Works with any SMTP provider (Titan, Gmail, etc.) via the SMTP_* env vars.
+  // `from` must be the authenticated mailbox (Gmail rewrites it otherwise);
+  // `replyTo` is the enquirer so you can reply straight to the lead.
+  if (hasSmtp) {
+    const preferred = Number(SMTP_PORT) === 587 ? [587, 465] : [465, 587];
+    let lastErr: SmtpErr | undefined;
+    for (const port of preferred) {
+      try {
+        await makeTransport(port).sendMail({
+          from: `"Neetrick Website" <${SMTP_USER}>`,
+          to,
+          replyTo: `"${name}" <${email}>`,
+          subject,
+          html,
+          attachments: cvBuffer ? [{ filename: cvName, content: cvBuffer }] : undefined,
+        });
+        console.log(`[contact] sent OK via SMTP ${SMTP_HOST}:${port} -> ${to}`);
+        return NextResponse.json({ ok: true });
+      } catch (err) {
+        lastErr = err as SmtpErr;
+        console.error(
+          `[contact] SMTP send failed on port ${port}:`,
+          "code=", lastErr.code,
+          "responseCode=", lastErr.responseCode,
+          "response=", lastErr.response,
+          "command=", lastErr.command
+        );
+        // Auth failures fail the same way on the other port — stop retrying.
+        if (!isConnectionError(lastErr)) break;
+      }
     }
   }
 

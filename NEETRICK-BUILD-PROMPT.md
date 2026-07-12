@@ -22,7 +22,7 @@ premium, kinetic, art-directed website for "Neetrick", an IT + marketing agency
 headquartered in Jamnagar, Gujarat, India. Zero template feel. No plain Bootstrap
 grids. Every section is intentional, editorial, and alive with motion + sound.
 
-TAGLINE (hero): "Smarter tricks. Better everyday."
+TAGLINE (hero): "Smart tricks. Better everyday."
 
 QUALITY BAR (match the polish, not the layouts):
 grainandmortar.com · kudos.framer.media · wearedaima.framer.website ·
@@ -174,7 +174,7 @@ FOOTER (global)
 - Huge animated "Neetrick" wordmark (fills / parallax-shifts on scroll).
 - Columns: nav · services · social · legal.
 - Big CTA line: "Got a brief? Let's make something smarter."
-- Contact: hello@neetrick.com · Jamnagar, Gujarat, India · phone.
+- Contact: sales@neetrick.com · Jamnagar, Gujarat, India · phone.
 - Bottom marquee: "SMARTER TRICKS · BETTER EVERYDAY ·" looping.
 - Back-to-top magnetic button (smooth Lenis scroll) · live year · "Made in Jamnagar".
 - Newsletter input → chime.mp3 on submit.
@@ -191,7 +191,7 @@ Layout: Full viewport, asymmetric. Oversized headline left/center; small meta
         column (HQ, est. year) offset; animated accent shape (blob/orbit) with
         parallax; scroll cue at bottom.
 Motion: Headline animates line-by-line (SplitText clip reveal):
-          "Smarter tricks." / "Better everyday."
+          "Smart tricks." / "Better everyday."
         Accent shape slow-rotate + parallax; meta fades in staggered.
         Magnetic CTA. Beneath: infinite services marquee reacting to scroll velocity.
 Sound:  enter.mp3 settle on load; hover.mp3 on CTA.
@@ -263,7 +263,7 @@ Mobile: Convert to vertical stepped timeline with line draw.
 ```
 Goal:   Quantify credibility.
 Layout: 3–4 oversized counters with mono labels:
-          250+ Projects · 90+ Clients · 4.2× Avg ROI · 9 Yrs Experience.
+          20+ Projects · 18+ Clients · 4.8× Avg ROI · 1 Yrs Experience.
 Motion: Count up on enter (useCounter); accent underline draw on finish.
 Sound:  count.mp3 as each counter completes.
 ```
@@ -406,7 +406,7 @@ Split:
           budget range (pill selector), services interested (multi-select chips),
           message. Floating labels, focus accent glow, validation states.
           Submit → success state with chime.mp3 + accent burst (confetti-lite).
-  Right → hello@neetrick.com · phone · Jamnagar HQ address · socials ·
+  Right → sales@neetrick.com · phone · Jamnagar HQ address · socials ·
           response-time note · embedded stylized map.
 FAQ:    Accordion (engagement, timelines, pricing).
 Footer.

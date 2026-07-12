@@ -109,20 +109,10 @@ export default function Footer() {
         className="display border-y border-line py-6 text-[clamp(2rem,7vw,5rem)] text-faint"
       />
 
-      <div className="flex flex-col items-center justify-between gap-4 px-[clamp(1.25rem,5vw,6rem)] py-6 text-xs text-muted md:flex-row">
+      <div className="flex flex-col items-center justify-center gap-4 px-[clamp(1.25rem,5vw,6rem)] py-6 text-xs text-muted md:flex-row">
         <span>
           © {new Date().getFullYear()} {SITE.name}. Made in Jamnagar.
         </span>
-        <button
-          onClick={() => {
-            play("click");
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          data-cursor="link"
-          className="hover:text-accent"
-        >
-          Back to top ↑
-        </button>
       </div>
     </footer>
   );

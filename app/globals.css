@@ -219,6 +219,35 @@ html.lenis body {
   to { transform: translateY(-22%); }
 }
 
+/* Continuous rotation for the hero scroll badge (runs on all devices). */
+@keyframes badgeSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hero animated aurora — CSS-only fallback for the particle background on
+   reduced-motion / low-power devices (cannot block the main thread). */
+.hero-aurora {
+  pointer-events: none;
+  background:
+    radial-gradient(38% 40% at 22% 28%, rgba(116, 59, 251, 0.28), transparent 70%),
+    radial-gradient(34% 36% at 80% 22%, rgba(116, 59, 251, 0.2), transparent 70%),
+    radial-gradient(46% 48% at 62% 82%, rgba(116, 59, 251, 0.16), transparent 72%);
+  animation: aurora 16s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+@keyframes aurora {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(0, -3%, 0) scale(1.08);
+    opacity: 1;
+  }
+}
+
 /* Theme-aware logo swap: white logo on dark, dark logo on light */
 .logo-light {
   display: none;

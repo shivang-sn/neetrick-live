@@ -1,16 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useSound } from "@/providers/SoundProvider";
 
 export default function HeroScrollBadge() {
   const ref = useRef<HTMLButtonElement>(null);
   const { play } = useSound();
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }, []);
 
   const scrollNext = () => {
     play("click");
@@ -21,9 +16,6 @@ export default function HeroScrollBadge() {
     window.scrollTo({ top, behavior: "smooth" });
   };
 
-  const spin = reduced ? "" : "animate-[spin_14s_linear_infinite]";
-  const spinDot = reduced ? "" : "animate-[spin_9s_linear_infinite]";
-
   return (
     <button
       ref={ref}
@@ -33,7 +25,11 @@ export default function HeroScrollBadge() {
       className="relative grid h-32 w-32 place-items-center text-text transition-transform hover:scale-105"
     >
       {/* Rotating circular text */}
-      <svg viewBox="0 0 100 100" className={`h-full w-full ${spin}`}>
+      <svg
+        viewBox="0 0 100 100"
+        className="h-full w-full"
+        style={{ animation: "badgeSpin 16s linear infinite" }}
+      >
         <defs>
           <path
             id="hero-badge-path"
@@ -50,22 +46,21 @@ export default function HeroScrollBadge() {
           }}
         >
           <textPath href="#hero-badge-path">
-            Scroll down • Smarter tricks •
+            batter everyday • smart tricks •
           </textPath>
         </text>
       </svg>
 
       {/* Orbiting accent dot */}
-      <span className={`absolute inset-0 ${spinDot}`}>
+      <span
+        className="absolute inset-0"
+        style={{ animation: "badgeSpin 9s linear infinite" }}
+      >
         <span className="absolute left-1/2 top-1 h-2 w-2 -translate-x-1/2 rounded-full bg-accent" />
       </span>
 
       {/* Center arrow */}
-      <span
-        className={`absolute grid h-9 w-9 place-items-center rounded-full bg-accent text-white ${
-          reduced ? "" : "animate-bounce"
-        }`}
-      >
+      <span className="absolute grid h-9 w-9 animate-bounce place-items-center rounded-full bg-accent text-white">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 5v14M6 13l6 6 6-6" />
         </svg>

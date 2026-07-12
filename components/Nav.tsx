@@ -99,7 +99,7 @@ export default function Nav() {
       {/* Full-screen overlay menu — driven by inline styles so it never
           depends on Tailwind JIT generating arbitrary clip-path utilities. */}
       <div
-        className="fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-bg"
+        className="fixed inset-0 z-40 overflow-hidden bg-bg"
         style={{
           clipPath: open
             ? "circle(150% at 100% 0)"
@@ -108,7 +108,7 @@ export default function Nav() {
           pointerEvents: open ? "auto" : "none",
         }}
       >
-        <div className="flex min-h-[100dvh] flex-col justify-center gap-10 px-[clamp(1.25rem,5vw,6rem)] pb-12 pt-28">
+        <div className="flex h-[100dvh] flex-col justify-center gap-[1.2vh] px-[clamp(1.25rem,5vw,6rem)] pb-[3vh] pt-[max(6rem,12vh)]">
           <nav className="flex flex-col">
             {NAV_LINKS.map((l, i) => (
               <Link
@@ -132,11 +132,11 @@ export default function Nav() {
               >
                 {/* sliding purple fill box */}
                 <span className="absolute inset-0 origin-left scale-x-0 bg-accent transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-x-100" />
-                <span className="relative flex items-center gap-6 py-3 md:py-4">
+                <span className="relative flex items-center gap-6 py-[1.1vh]">
                   <span className="kicker w-10 transition-colors group-hover:text-bg">
                     0{i + 1}
                   </span>
-                  <span className="display text-[clamp(2.25rem,9vw,6rem)] leading-none transition-colors duration-300 group-hover:text-bg">
+                  <span className="display text-[clamp(1.6rem,6.4vh,6.5rem)] leading-none transition-colors duration-300 group-hover:text-bg">
                     {l.label}
                   </span>
                 </span>

@@ -43,10 +43,10 @@ export default function Faq() {
 
   return (
     <section className="section-pad">
-      <div className="kicker mb-4">FAQ</div>
+      <div className="kicker mb-4 md:text-center">FAQ</div>
       <AnimatedTitle
         text="Questions, answered."
-        className="text-fluid-h2 mb-12"
+        className="text-fluid-h2 mb-12 md:justify-center"
         accentWords={["answered."]}
       />
 

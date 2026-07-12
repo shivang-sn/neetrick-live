@@ -1,10 +1,10 @@
 export const SITE = {
   name: "Neetrick",
-  tagline: ["Smarter tricks.", "Better everyday."],
+  tagline: ["Smart tricks.", "Better everyday."],
   description:
     "An IT + marketing studio in Jamnagar building brands, products, and growth engines that actually move numbers.",
-  email: "hello@neetrick.com",
-  phone: "+91 90000 00000",
+  email: "sales@neetrick.com",
+  phone: "+91 7698301043",
   location: "Jamnagar, Gujarat, India",
 };
 
@@ -108,10 +108,10 @@ export const PROCESS = [
 ];
 
 export const STATS = [
-  { value: 250, suffix: "+", label: "Projects shipped" },
-  { value: 90, suffix: "+", label: "Happy clients" },
-  { value: 4.2, suffix: "×", label: "Avg. ROI" },
-  { value: 9, suffix: " yrs", label: "Experience" },
+  { value: 20, suffix: "+", label: "Projects shipped" },
+  { value: 18, suffix: "+", label: "Happy clients" },
+  { value: 4.8, suffix: "×", label: "Avg. ROI" },
+  { value: 1, suffix: " yrs", label: "Experience" },
 ];
 
 export const TESTIMONIALS = [
@@ -148,10 +148,10 @@ export const TESTIMONIALS = [
 ];
 
 export const ROLES = [
-  { slug: "frontend-engineer", title: "Frontend Engineer", dept: "Engineering", location: "Jamnagar / Remote", type: "Full-time" },
-  { slug: "brand-designer", title: "Brand Designer", dept: "Design", location: "Jamnagar", type: "Full-time" },
-  { slug: "performance-marketer", title: "Performance Marketer", dept: "Marketing", location: "Remote", type: "Full-time" },
-  { slug: "content-strategist", title: "Content Strategist", dept: "Marketing", location: "Jamnagar / Remote", type: "Contract" },
+  { slug: "bde", title: "Business Development Executive (BDE)", dept: "Sales", location: "Remote", type: "Freelance" },
+  { slug: "business-analyst", title: "Business Analyst (BA)", dept: "Strategy", location: "Remote", type: "Freelance" },
+  { slug: "wordpress-developer", title: "Backend WordPress Developer", dept: "Engineering", location: "Remote", type: "Freelance" },
+  { slug: "shopify-developer", title: "Shopify Developer", dept: "Engineering", location: "Remote", type: "Freelance" },
 ];
 
 export const VALUES = [

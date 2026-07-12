@@ -49,7 +49,7 @@ export default function RoleDetail({ params }: { params: { slug: string } }) {
 
         <div>
           <div className="kicker mb-6">Apply</div>
-          <ContactForm compact />
+          <ContactForm compact role={role.title} />
         </div>
       </section>
     </>

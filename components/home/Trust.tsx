@@ -3,14 +3,12 @@
 import Marquee from "../Marquee";
 
 const CLIENTS = [
-  "ATLAS",
-  "VOLTEDGE",
-  "SAFFRON",
-  "COASTAL CO.",
-  "NORTHWIND",
-  "LUMEN",
-  "KAYA",
-  "ORBIT",
+  "YATHARTH TRAVEL COMPANY",
+  "KD HOLIDAYS",
+  "APEX",
+  "RJ SPORTS",
+  "HEXA ACADEMY",
+  "KB MOTERS"
 ];
 
 export default function Trust() {
@@ -20,6 +18,7 @@ export default function Trust() {
       <Marquee
         items={CLIENTS}
         duration={30}
+        reverse
         separator="✦"
         className="display text-[clamp(1.25rem,3vw,2rem)] text-faint"
       />

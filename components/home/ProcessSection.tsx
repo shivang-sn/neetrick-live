@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { PROCESS } from "@/lib/content";
 import { useSound } from "@/providers/SoundProvider";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ProcessSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -15,20 +18,27 @@ export default function ProcessSection() {
   // total slides: intro + steps + cta
   const totalSlides = PROCESS.length + 2;
 
-  useEffect(() => {
-    if (window.innerWidth < 768) return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    const ctx = gsap.context(() => {
+  // useGSAP handles scope + cleanup (revert) correctly across Next.js client
+  // navigation, which prevents the pin-spacer teardown crash that a plain
+  // useEffect + ScrollTrigger.pin can cause.
+  useGSAP(
+    () => {
+      if (window.innerWidth < 768) return;
+      const track = trackRef.current!;
+      // Scroll distance tied EXACTLY to the horizontal content width, so the
+      // animation ends precisely on the last slide — no trailing dead space.
+      const amount = () => track.scrollWidth - window.innerWidth;
       let lastIndex = -1;
-      gsap.to(trackRef.current, {
-        xPercent: -100 * (totalSlides - 1),
+      gsap.to(track, {
+        x: () => -amount(),
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "bottom bottom",
+          end: () => "+=" + amount(),
           scrub: 1,
+          pin: true,
+          anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const idx = Math.round(self.progress * (totalSlides - 1));
@@ -39,10 +49,9 @@ export default function ProcessSection() {
           },
         },
       });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [play, totalSlides]);
+    },
+    { scope: sectionRef, dependencies: [play, totalSlides] }
+  );
 
   const slideClass =
     "process-slide flex h-screen w-screen shrink-0 flex-col justify-center px-[clamp(1.25rem,5vw,6rem)] md:w-screen";
@@ -50,16 +59,12 @@ export default function ProcessSection() {
   return (
     <section
       ref={sectionRef}
-      style={{ height: `${totalSlides * 100}vh` }}
-      className="relative"
+      className="relative bg-surface md:h-screen md:overflow-hidden"
     >
-      {/* On desktop: sticky viewport that holds the horizontal track.
-          On mobile: normal vertical stack of slides. */}
-      <div className="md:sticky md:top-0 md:h-screen md:overflow-hidden bg-surface">
-        <div
-          ref={trackRef}
-          className="flex w-max flex-col md:h-screen md:w-max md:flex-row"
-        >
+      <div
+        ref={trackRef}
+        className="flex flex-col md:h-screen md:w-max md:flex-row"
+      >
           {/* Slide 1 — intro */}
           <div className={slideClass}>
             <div className="kicker mb-4">04 — How we work</div>
@@ -101,7 +106,6 @@ export default function ProcessSection() {
             </Link>
           </div>
         </div>
-      </div>
     </section>
   );
 }

@@ -68,7 +68,7 @@ export default function Hero() {
                   "heroReveal 1s cubic-bezier(0.2,1,0.3,1) 0.3s both",
               }}
             >
-              Smarter tricks.
+              Smart tricks.
             </span>
           </span>
           <span className="reveal-line">

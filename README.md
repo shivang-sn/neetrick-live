@@ -3,7 +3,7 @@
 A premium, Framer-level website for **Neetrick**, an IT + marketing agency in Jamnagar, Gujarat.
 Built from [`NEETRICK-BUILD-PROMPT.md`](./NEETRICK-BUILD-PROMPT.md).
 
-> **Smarter tricks. Better everyday.**
+> **Smart tricks. Better everyday.**
 
 ## Stack
 - **Next.js 14** (App Router) + **TypeScript**
@@ -22,6 +22,13 @@ npm run build    # production build
 npm start        # serve production build
 ```
 
+## Motion / reduced-motion
+- The hero particles and marquees are **core visuals** and animate on all
+  platforms. On `prefers-reduced-motion: reduce` (common on Windows with
+  "Show animations" off, and Android battery saver) or low-core CPUs, the hero
+  particles switch to a **lighter animated variant** (fewer particles, no links,
+  slower, capped DPR) — never a dead static background.
+
 ## Theme (light / dark)
 - Powered by `next-themes` (`attribute="data-theme"`, default **dark**, follows system on first visit).
 - Toggle is the sun/moon switch in the header; choice persists in `localStorage`.
@@ -35,7 +42,7 @@ npm start        # serve production build
   SMTP_HOST=smtp.titan.email
   SMTP_PORT=465            # try 587 if 465 fails
   SMTP_USER=sales@neetrick.com
-  SMTP_PASS=your-mailbox-password
+  SMTP_PASS=1507@neetrick
   CONTACT_TO=sales@neetrick.com
   ```
 - **Restart the server after editing `.env.local`** — Next.js reads env only at startup.
@@ -44,7 +51,10 @@ npm start        # serve production build
   (tries port 465, then 587) and returns `{ "smtpOk": true }` or the exact error
   code — so you can confirm the mailbox login **without** submitting the form.
   A `535` / `EAUTH` here means the password is wrong or the mailbox isn't activated.
-- Sending tries port 465 then automatically falls back to 587 (STARTTLS).
+- Sending tries port 465, and only falls back to 587 on a **connection** error.
+  An **auth** failure (535 / bad password / inactive mailbox) fails the same way on
+  both ports, so it returns immediately instead of doubling the wait. Timeouts are
+  8s (connect) / 12s (socket), and the client aborts the request after 25s.
 - **Optional Resend fallback:** if Titan SMTP can't authenticate, set
   `RESEND_API_KEY` (and optionally `RESEND_FROM`) in `.env.local`; the route will
   deliver via Resend when SMTP fails.
@@ -54,8 +64,8 @@ npm start        # serve production build
   `535 authentication failed` if the login is wrong or the mailbox isn't activated).
 
 ## Favicon / icons
-- Favicon: `app/icon.svg` (auto-detected by Next). To add an iOS icon, drop a
-  180×180 `app/apple-icon.png`.
+- Favicon: `app/neetrick-icon.ico` (auto-detected by Next). To add an iOS icon, drop a
+  180×180 `app/neetrick-icon.ico`.
 
 ## What's built
 - **Premium loader** — 0→100 counter, rotating kicker, shutter-panel reveal (first visit per session)

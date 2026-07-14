@@ -110,7 +110,7 @@ export default function Footer() {
       />
 
       <div className="flex flex-col items-center justify-center gap-4 px-[clamp(1.25rem,5vw,6rem)] py-6 text-xs text-muted md:flex-row">
-        <span>
+        <span className="text-center">
           &copy; {new Date().getFullYear()} {SITE.name}. All rights reserved. Empowering businesses through innovative digital solutions. Designed & developed by{" "}
           <a
             href="https://www.linkedin.com/in/shivang-nanda-904731171/"

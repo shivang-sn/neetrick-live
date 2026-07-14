@@ -3,8 +3,8 @@
 import { useEffect, useRef } from "react";
 
 // HeroV2 background (Option 3): giant slow-drifting ghost typography plus a
-// liquid cursor-trail blob. Pure DOM/CSS — no canvas, no per-frame distance
-// math — so unlike the old particle network there's no perf gating needed.
+// liquid cursor-trail blob. Pure DOM/CSS - no canvas, no per-frame distance
+// math - so unlike the old particle network there's no perf gating needed.
 export default function HeroGhostField() {
   const stageRef = useRef<HTMLDivElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);

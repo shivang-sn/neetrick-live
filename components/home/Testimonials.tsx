@@ -21,7 +21,7 @@ export default function Testimonials() {
 
   return (
     <section className="section-pad bg-surface overflow-hidden">
-      <div className="kicker mb-12">06 — What our clients say</div>
+      <div className="kicker mb-12">06 - What our clients say</div>
 
       <div className="grid items-center gap-10 md:grid-cols-[0.8fr_1.2fr]">
         {/* Left: reviewer list, active centered & highlighted */}
@@ -70,7 +70,7 @@ export default function Testimonials() {
                 {t.quote}
               </p>
               <footer className="mt-6 kicker">
-                {t.name} — {t.role}
+                {t.name} - {t.role}
               </footer>
             </blockquote>
           ))}

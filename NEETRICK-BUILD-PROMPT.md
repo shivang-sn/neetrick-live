@@ -1,18 +1,18 @@
-# NEETRICK — MASTER BUILD PROMPT
+# NEETRICK - MASTER BUILD PROMPT
 ### Framer-Level · Award-Grade · IT + Marketing Agency Website
 *Single-file build bible. Paste whole, or feed section-by-section to your generation tool / dev team.*
 
 ---
 
 ## HOW TO USE THIS FILE
-1. **PART 0** is the global foundation (stack, design system, sound engine, cursor, motion, loader, nav, footer). Build it first — every page depends on it.
+1. **PART 0** is the global foundation (stack, design system, sound engine, cursor, motion, loader, nav, footer). Build it first - every page depends on it.
 2. **PART 1–9** are the pages. Each page is broken into sections with: **Goal · Layout · Type · Motion · Sound · Micro-interactions · Copy · Responsive**.
 3. **PART 10** is deliverables + definition of done.
 4. Replace all placeholder copy/images/sounds with real assets (locations noted in README section).
 
 ---
 
-# PART 0 — GLOBAL FOUNDATION (applies to every page)
+# PART 0 - GLOBAL FOUNDATION (applies to every page)
 
 ```
 ROLE
@@ -41,7 +41,7 @@ pilcommunication.com/careers
 - Embla or custom GSAP for sliders / horizontal scroll
 ```
 
-### DESIGN SYSTEM (tokens — expose ALL as CSS variables in :root)
+### DESIGN SYSTEM (tokens - expose ALL as CSS variables in :root)
 ```
 Mode: dark-primary with deliberate light "breath" sections.
 
@@ -50,7 +50,7 @@ Palette:
   --surface:   #121214
   --text:      #F4F2EC    (warm off-white)
   --muted:     #8A8A86
-  --accent:    #C6F432    (electric lime — THE single accent, commit to it)
+  --accent:    #C6F432    (electric lime - THE single accent, commit to it)
   --accent-2:  #1B1B1F    (subtle contrast blocks)
   (Provide a light-theme inversion for "breath" sections.)
 
@@ -82,7 +82,7 @@ Radius: mostly sharp/editorial; pills only for buttons + tags.
 - Disabled on touch devices (feature-detect).
 ```
 
-### GLOBAL SOUND ENGINE (signature feature — designer-grade, NEVER annoying)
+### GLOBAL SOUND ENGINE (signature feature - designer-grade, NEVER annoying)
 ```
 - AudioProvider (React context) on Howler.js. Single config map for easy swapping.
 - Persistent animated speaker toggle (top-right). Default OFF + one-time tasteful
@@ -140,7 +140,7 @@ Home sections → Work → Services → About → Careers → Contact → Insigh
 # GLOBAL LOADER (first paint only)
 
 ```
-LOADER (sessionStorage guard — first visit per session only)
+LOADER (sessionStorage guard - first visit per session only)
 - Goal: a ~2s premium moment that earns trust before the hero.
 - Layout: full-screen --bg overlay. Centered giant number counter + small
   rotating kicker line + thin accent progress bar.
@@ -182,9 +182,9 @@ FOOTER (global)
 
 ---
 
-# PART 1 — HOME PAGE (the showpiece)
+# PART 1 - HOME PAGE (the showpiece)
 
-### SECTION 1 — HERO
+### SECTION 1 - HERO
 ```
 Goal:   Instant "serious creative agency" hit.
 Layout: Full viewport, asymmetric. Oversized headline left/center; small meta
@@ -195,13 +195,13 @@ Motion: Headline animates line-by-line (SplitText clip reveal):
         Accent shape slow-rotate + parallax; meta fades in staggered.
         Magnetic CTA. Beneath: infinite services marquee reacting to scroll velocity.
 Sound:  enter.mp3 settle on load; hover.mp3 on CTA.
-Copy:   Sub — "An IT + marketing studio in Jamnagar building brands, products,
+Copy:   Sub - "An IT + marketing studio in Jamnagar building brands, products,
           and growth engines that actually move numbers."
-        Marquee — "WEB · APPS · BRANDING · SEO · PERFORMANCE MARKETING · CONTENT ·"
+        Marquee - "WEB · APPS · BRANDING · SEO · PERFORMANCE MARKETING · CONTENT ·"
 Mobile: Headline scales down via clamp; meta stacks; shape simplifies.
 ```
 
-### SECTION 2 — TRUST / CLIENTS
+### SECTION 2 - TRUST / CLIENTS
 ```
 Goal:   Social proof in one glance.
 Layout: Thin band; kicker "Trusted by ambitious teams"; grayscale logo marquee
@@ -209,18 +209,18 @@ Layout: Thin band; kicker "Trusted by ambitious teams"; grayscale logo marquee
 Motion: Seamless dual-row marquee, opposite directions.
 ```
 
-### SECTION 3 — INTRO STATEMENT (light "breath" section)
+### SECTION 3 - INTRO STATEMENT (light "breath" section)
 ```
 Goal:   Define who Neetrick is in one strong paragraph.
 Layout: Inverted light theme. One large editorial paragraph; key words in accent.
-        Big index "01 — Who we are".
+        Big index "01 - Who we are".
 Motion: Word-by-word highlight reveal on scroll (muted → text fill).
-Copy:   "We're Neetrick — equal parts engineers and marketers. We design the brand,
+Copy:   "We're Neetrick - equal parts engineers and marketers. We design the brand,
         build the product, and run the growth, so you get one partner instead of
         five vendors."
 ```
 
-### SECTION 4 — SERVICES (pinned, scroll-driven) — FLAGSHIP INTERACTION
+### SECTION 4 - SERVICES (pinned, scroll-driven) - FLAGSHIP INTERACTION
 ```
 Goal:   Showcase capability with the hero interaction of the site.
 Layout: Pin the section. As user scrolls, the right-side visual + description swap
@@ -236,7 +236,7 @@ Sound:  enter.mp3 (throttled) as each service activates.
 Mobile: Convert pin to stacked accordion/cards (no broken pinning).
 ```
 
-### SECTION 5 — SELECTED WORK (editorial showcase)
+### SECTION 5 - SELECTED WORK (editorial showcase)
 ```
 Goal:   Prove craft with real projects.
 Layout: Asymmetric list of 4–6 projects (NOT a grid). Each row: oversized project
@@ -247,7 +247,7 @@ Motion: Rows reveal staggered; hover preview lerps to cursor; row text shifts on
 Sound:  hover.mp3 per row; click.mp3 on open (shutter wipe → /work/[slug]).
 ```
 
-### SECTION 6 — PROCESS (horizontal scroll)
+### SECTION 6 - PROCESS (horizontal scroll)
 ```
 Goal:   Show how engagements run.
 Layout: GSAP horizontal scroll. Steps: 01 Discover · 02 Strategy · 03 Build · 04 Grow.
@@ -259,7 +259,7 @@ Sound:  scrolltick.mp3 (very subtle) while panning.
 Mobile: Convert to vertical stepped timeline with line draw.
 ```
 
-### SECTION 7 — IMPACT / STATS
+### SECTION 7 - IMPACT / STATS
 ```
 Goal:   Quantify credibility.
 Layout: 3–4 oversized counters with mono labels:
@@ -268,7 +268,7 @@ Motion: Count up on enter (useCounter); accent underline draw on finish.
 Sound:  count.mp3 as each counter completes.
 ```
 
-### SECTION 8 — ABOUT TEASER + LOCATION
+### SECTION 8 - ABOUT TEASER + LOCATION
 ```
 Goal:   Humanize + plant the Jamnagar HQ.
 Layout: Split. Left: brand story snippet + "Headquartered in Jamnagar, Gujarat"
@@ -278,7 +278,7 @@ Motion: Parallax images; map pin pulse; text reveal.
 Copy:   "From the coast of Gujarat to brands across the globe."  CTA "About us →".
 ```
 
-### SECTION 9 — TESTIMONIALS
+### SECTION 9 - TESTIMONIALS
 ```
 Goal:   Voice of the client.
 Layout: Auto-advancing premium quote slider OR vertical quote marquee. Large quote,
@@ -286,7 +286,7 @@ Layout: Auto-advancing premium quote slider OR vertical quote marquee. Large quo
 Motion: Crossfade/slide with progress dots; drag-enabled (cursor "DRAG").
 ```
 
-### SECTION 10 — CAREERS TEASER
+### SECTION 10 - CAREERS TEASER
 ```
 Goal:   Funnel talent.
 Layout: Bold band "We're hiring." + hover-reveal list of open roles (ref
@@ -294,7 +294,7 @@ Layout: Bold band "We're hiring." + hover-reveal list of open roles (ref
 CTA:    "See open roles →" to /careers.
 ```
 
-### SECTION 11 — BIG CTA BAND
+### SECTION 11 - BIG CTA BAND
 ```
 Goal:   Convert.
 Layout: Full-width, oversized "Let's build something smarter." + magnetic pill
@@ -306,9 +306,9 @@ Sound:  click.mp3 on CTA.
 
 ---
 
-# PART 2 — WORK / PORTFOLIO
+# PART 2 - WORK / PORTFOLIO
 
-### /work — LISTING
+### /work - LISTING
 ```
 Hero:   "Selected Work" oversized + filter chips (All · Web · Branding · Marketing
         · Apps) + animated project count.
@@ -318,7 +318,7 @@ Motion: Filter re-layout animates (FLIP); staggered reveal on scroll.
 Sound:  hover.mp3 per card; click.mp3 on open.
 ```
 
-### /work/[slug] — CASE STUDY
+### /work/[slug] - CASE STUDY
 ```
 Hero:        Full-bleed cover; title clip-reveal; meta row (client, year, services, role);
              scroll cue.
@@ -333,9 +333,9 @@ Next:        Full-bleed teaser auto-suggesting the next case study with a shutte
 
 ---
 
-# PART 3 — SERVICES
+# PART 3 - SERVICES
 
-### /services — OVERVIEW
+### /services - OVERVIEW
 ```
 Hero:     "What we do" + one-liner; accent shape.
 Body:     6 services as large stacked sections (alternating layout); each with
@@ -344,7 +344,7 @@ Engage:   "How we engage" mini-process recap (retainer / project / sprint).
 CTA band.
 ```
 
-### /services/[slug] — SERVICE DETAIL
+### /services/[slug] - SERVICE DETAIL
 ```
 Hero:        Service name clip-reveal + value prop + index.
 Included:    "What's included" animated checklist reveal.
@@ -356,7 +356,7 @@ Close:       Pricing/engagement note + CTA "Get a quote".
 
 ---
 
-# PART 4 — ABOUT
+# PART 4 - ABOUT
 
 ### /about
 ```
@@ -374,7 +374,7 @@ CTA band.
 
 ---
 
-# PART 5 — CAREERS  (ref pilcommunication.com/careers, Neetrick-branded)
+# PART 5 - CAREERS  (ref pilcommunication.com/careers, Neetrick-branded)
 
 ### /careers
 ```
@@ -387,7 +387,7 @@ Process:  "How hiring works" 4-step line-draw.
 CTA:      "Don't see your role? Pitch us." → contact.
 ```
 
-### /careers/[slug] — ROLE DETAIL
+### /careers/[slug] - ROLE DETAIL
 ```
 Header:   Title, dept, location, type. Sticky "Apply" button.
 Body:     About the role · responsibilities · requirements · nice-to-haves · perks.
@@ -396,7 +396,7 @@ Form:     name, email, portfolio/CV upload, message → chime.mp3 on success.
 
 ---
 
-# PART 6 — CONTACT
+# PART 6 - CONTACT
 
 ### /contact
 ```
@@ -414,9 +414,9 @@ Footer.
 
 ---
 
-# PART 7 — INSIGHTS (optional blog)
+# PART 7 - INSIGHTS (optional blog)
 
-### /insights — LISTING
+### /insights - LISTING
 ```
 Hero:   "Insights" + category filter. Featured post large + editorial card list.
 Cards:  Hover reveal + reading time; staggered reveal.
@@ -432,7 +432,7 @@ Close:    Share row · related posts · newsletter CTA.
 
 ---
 
-# PART 8 — 404
+# PART 8 - 404
 
 ```
 404:
@@ -444,7 +444,7 @@ Close:    Share row · related posts · newsletter CTA.
 
 ---
 
-# PART 9 — DELIVERABLES & DEFINITION OF DONE
+# PART 9 - DELIVERABLES & DEFINITION OF DONE
 
 ### DELIVERABLES
 ```
@@ -452,7 +452,7 @@ Close:    Share row · related posts · newsletter CTA.
     app/ · components/ · lib/ · hooks/ · providers/ · public/
 - Centralized tokens (colors, fluid type scale, spacing) + sound config map.
 - Hooks: useSound · useMagnetic · useScrollReveal · useCounter · useCursor · useLenis.
-- Placeholder content, images, and /public/sounds/*.mp3 — all easy to swap.
+- Placeholder content, images, and /public/sounds/*.mp3 - all easy to swap.
 - README: setup, asset locations, how to add/replace sounds, theming guide.
 ```
 
@@ -476,7 +476,7 @@ Close:    Share row · related posts · newsletter CTA.
 - Team photos + studio/BTS photos (Jamnagar)
 - Client logos
 - 8 sound files in /public/sounds (boot, shutter, hover, click, enter,
-  scrolltick, count, chime) — royalty-free
+  scrolltick, count, chime) - royalty-free
 - Real copy for hero, about story, services, careers roles, testimonials
 - OG/social images per route
 - Jamnagar HQ map embed + address + contact details

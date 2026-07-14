@@ -5,18 +5,38 @@ import { useSound } from "@/providers/SoundProvider";
 import Reveal from "../Reveal";
 import AnimatedTitle from "../AnimatedTitle";
 
-const COL_A = ["#2a1a4d", "#1a2440", "#3a2718", "#2a1a4d", "#1a2440"];
-const COL_B = ["#1a2440", "#3a2718", "#2a1a4d", "#1a2440", "#3a2718"];
+// Mission - five independent points, one per tile
+const COL_A = [
+  { color: "#2a1a4d", text: "Build scalable digital products" },
+  { color: "#1a2440", text: "Design brands that convert" },
+  { color: "#3a2718", text: "Engineer growth that compounds" },
+  { color: "#2a1a4d", text: "Ship fast, without cutting corners" },
+  { color: "#1a2440", text: "One partner for brand and code" },
+];
+// Vision - five independent points, one per tile
+const COL_B = [
+  { color: "#1a2440", text: "Smart tricks, better everyday" },
+  { color: "#3a2718", text: "Outcomes over vanity metrics" },
+  { color: "#2a1a4d", text: "Small team, senior craft" },
+  { color: "#1a2440", text: "Jamnagar roots, global reach" },
+  { color: "#3a2718", text: "Technology and creativity, unified" },
+];
 
-function Tile({ c }: { c: string }) {
+function Tile({ color, text }: { color: string; text: string }) {
   return (
     <div
-      className="aspect-[4/5] w-full rounded-lg"
+      className="relative flex aspect-[4/5] w-full items-center justify-center rounded-lg"
       style={{
-        background: `linear-gradient(145deg, ${c}, #0f0d16)`,
+        background: `linear-gradient(145deg, ${color}, #0f0d16)`,
         border: "1px solid rgba(255,255,255,0.05)",
       }}
-    />
+    >
+      {/* Fixed light text: tiles are always a dark gradient regardless of
+          site theme, so this stays legible in both light and dark mode. */}
+      <span className="display line-clamp-2 px-3 text-center text-xl leading-tight text-white/90 sm:text-2xl">
+        {text}
+      </span>
+    </div>
   );
 }
 
@@ -26,7 +46,7 @@ export default function AboutTeaser() {
     <section className="section-pad overflow-hidden">
       <div className="grid items-center gap-12 md:grid-cols-2">
         <Reveal>
-          <div className="kicker mb-6">05 — Studio</div>
+          <div className="kicker mb-6">05 - Studio</div>
           <AnimatedTitle
             text="From the coast of Gujarat to brands across the globe."
             className="text-fluid-h2"
@@ -56,14 +76,14 @@ export default function AboutTeaser() {
 
         {/* Two columns scrolling in opposite directions, infinitely */}
         <div className="grid h-[70vh] grid-cols-2 gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
-          <div className="vcol vcol-up">
-            {[...COL_A, ...COL_A].map((c, i) => (
-              <Tile key={i} c={c} />
+          <div className="vcol vcol-up ">
+            {[...COL_A, ...COL_A].map((t, i) => (
+              <Tile key={i} color={t.color} text={t.text}/>
             ))}
           </div>
           <div className="vcol vcol-down">
-            {[...COL_B, ...COL_B].map((c, i) => (
-              <Tile key={i} c={c} />
+            {[...COL_B, ...COL_B].map((t, i) => (
+              <Tile key={i} color={t.color} text={t.text} />
             ))}
           </div>
         </div>

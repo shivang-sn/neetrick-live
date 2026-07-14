@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 const TEXT =
-  "We're Neetrick — equal parts engineers and marketers. We design the brand, build the product, and run the growth, so you get one partner instead of five vendors.";
+  "We're Neetrick - equal parts engineers and marketers. We design the brand, build the product, and run the growth, so you get one partner instead of five vendors.";
 const HIGHLIGHT = ["engineers", "marketers.", "brand,", "product,", "growth,"];
 
 export default function Intro() {
@@ -32,7 +32,7 @@ export default function Intro() {
 
   return (
     <section className="bg-surface text-text section-pad">
-      <div className="kicker mb-10">01 — Who we are</div>
+      <div className="kicker mb-10">01 - Who we are</div>
       <p
         ref={ref}
         className="display max-w-5xl text-fluid-h3 leading-[1.2]"

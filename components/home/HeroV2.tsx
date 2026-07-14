@@ -46,7 +46,7 @@ export default function HeroV2() {
       <div className="container-x relative z-10">
         <div className="kicker mb-8 flex gap-6">
           <span>Est. 2026</span>
-          <span>—</span>
+          <span>-</span>
           <span>{SITE.location}</span>
         </div>
 

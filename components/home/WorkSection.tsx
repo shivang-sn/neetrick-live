@@ -22,7 +22,7 @@ export default function WorkSection() {
     <section className="section-pad relative" onMouseMove={onMove}>
       <div className="mb-12 flex items-end justify-between">
         <div>
-          <div className="kicker mb-4">03 — Selected work</div>
+          <div className="kicker mb-4">03 - Selected work</div>
           <AnimatedTitle
             text="Recent projects"
             className="text-fluid-h2"
@@ -84,17 +84,11 @@ export default function WorkSection() {
         }}
       >
         {WORK.map((w, i) => (
-          <video
-            key={w.slug}
+          
+          <img key={w.slug}
             className="absolute inset-0 h-full w-full object-cover"
             style={{ opacity: hovered === i ? 1 : 0, background: w.color }}
-            src={w.video}
-            muted
-            loop
-            playsInline
-            autoPlay
-            preload="metadata"
-          />
+            src={w.video} alt={w.slug} />
         ))}
       </div>
     </section>

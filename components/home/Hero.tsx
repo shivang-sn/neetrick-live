@@ -9,7 +9,7 @@ import Marquee from "../Marquee";
 import Magnetic from "../Magnetic";
 import HeroScrollBadge from "./HeroScrollBadge";
 
-// WebGL/particle background — client-only so it never breaks SSR/build.
+// WebGL/particle background - client-only so it never breaks SSR/build.
 const HeroParticles = dynamic(() => import("./HeroParticles"), {
   ssr: false,
 });
@@ -51,7 +51,7 @@ export default function Hero() {
       <div className="container-x relative z-10">
         <div className="kicker mb-8 flex gap-6">
           <span>Est. 2026</span>
-          <span>—</span>
+          <span>-</span>
           <span>{SITE.location}</span>
         </div>
 

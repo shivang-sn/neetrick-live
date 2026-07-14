@@ -8,7 +8,7 @@ import AnimatedTitle from "./AnimatedTitle";
 const FAQS = [
   {
     q: "How do you engage with clients?",
-    a: "Three ways — a monthly retainer for ongoing brand, product, and growth work; a fixed-scope project with clear milestones; or a focused sprint to ship one thing fast. We'll recommend the right fit on our first call.",
+    a: "Three ways - a monthly retainer for ongoing brand, product, and growth work; a fixed-scope project with clear milestones; or a focused sprint to ship one thing fast. We'll recommend the right fit on our first call.",
   },
   {
     q: "What's a typical timeline?",
@@ -16,7 +16,7 @@ const FAQS = [
   },
   {
     q: "How is pricing structured?",
-    a: "Project work is quoted as a fixed price after a short discovery. Retainers are a flat monthly fee based on scope. No hidden costs — you approve the number before we start.",
+    a: "Project work is quoted as a fixed price after a short discovery. Retainers are a flat monthly fee based on scope. No hidden costs - you approve the number before we start.",
   },
   {
     q: "What does your process look like?",
@@ -28,7 +28,7 @@ const FAQS = [
   },
   {
     q: "Do you offer ongoing support?",
-    a: "Yes. After launch we offer maintenance, iteration, and growth retainers — from bug fixes and hosting to continuous marketing and new features.",
+    a: "Yes. After launch we offer maintenance, iteration, and growth retainers - from bug fixes and hosting to continuous marketing and new features.",
   },
 ];
 

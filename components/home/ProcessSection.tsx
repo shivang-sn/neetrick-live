@@ -26,7 +26,7 @@ export default function ProcessSection() {
       if (window.innerWidth < 768) return;
       const track = trackRef.current!;
       // Scroll distance tied EXACTLY to the horizontal content width, so the
-      // animation ends precisely on the last slide — no trailing dead space.
+      // animation ends precisely on the last slide - no trailing dead space.
       const amount = () => track.scrollWidth - window.innerWidth;
       let lastIndex = -1;
       gsap.to(track, {
@@ -65,9 +65,9 @@ export default function ProcessSection() {
         ref={trackRef}
         className="flex flex-col md:h-screen md:w-max md:flex-row"
       >
-          {/* Slide 1 — intro */}
+          {/* Slide 1 - intro */}
           <div className={slideClass}>
-            <div className="kicker mb-4">04 — How we work</div>
+            <div className="kicker mb-4">04 - How we work</div>
             <h2 className="display text-fluid-h1 max-w-4xl">
               A process built to <span className="text-accent">ship</span>.
             </h2>
@@ -95,7 +95,7 @@ export default function ProcessSection() {
             </div>
           ))}
 
-          {/* Final slide — CTA */}
+          {/* Final slide - CTA */}
           <div className={slideClass}>
             <h3 className="display text-fluid-h1">
               Ready to <span className="text-accent">grow?</span>

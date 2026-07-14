@@ -1,4 +1,4 @@
-# Neetrick — Agency Website
+# Neetrick - Agency Website
 
 A premium, Framer-level website for **Neetrick**, an IT + marketing agency in Jamnagar, Gujarat.
 Built from [`NEETRICK-BUILD-PROMPT.md`](./NEETRICK-BUILD-PROMPT.md).
@@ -11,7 +11,7 @@ Built from [`NEETRICK-BUILD-PROMPT.md`](./NEETRICK-BUILD-PROMPT.md).
 - **GSAP + ScrollTrigger** (pinning, horizontal scroll, parallax)
 - **Lenis** (smooth scroll)
 - **Framer Motion** (transitions)
-- **Web Audio API** sound engine (synthesized — no audio files needed)
+- **Web Audio API** sound engine (synthesized - no audio files needed)
 
 ## Run
 
@@ -27,12 +27,12 @@ npm start        # serve production build
   platforms. On `prefers-reduced-motion: reduce` (common on Windows with
   "Show animations" off, and Android battery saver) or low-core CPUs, the hero
   particles switch to a **lighter animated variant** (fewer particles, no links,
-  slower, capped DPR) — never a dead static background.
+  slower, capped DPR) - never a dead static background.
 
 ## Theme (light / dark)
 - Powered by `next-themes` (`attribute="data-theme"`, default **dark**, follows system on first visit).
 - Toggle is the sun/moon switch in the header; choice persists in `localStorage`.
-- Colors are CSS variables in `app/globals.css` — edit `:root`/`[data-theme="dark"]`
+- Colors are CSS variables in `app/globals.css` - edit `:root`/`[data-theme="dark"]`
   and `[data-theme="light"]` blocks. Tailwind tokens: `bg`, `surface`, `surface-2`,
   `text`, `muted`, `accent`, `line` (borders), `overlay`, `faint`.
 
@@ -45,11 +45,11 @@ npm start        # serve production build
   SMTP_PASS=1507@neetrick
   CONTACT_TO=sales@neetrick.com
   ```
-- **Restart the server after editing `.env.local`** — Next.js reads env only at startup.
+- **Restart the server after editing `.env.local`** - Next.js reads env only at startup.
 - Health check: `GET /api/contact` → `{ "configured": true }` when SMTP env is loaded.
 - **Live login test:** `GET /api/contact?verify=1` actually attempts SMTP auth
   (tries port 465, then 587) and returns `{ "smtpOk": true }` or the exact error
-  code — so you can confirm the mailbox login **without** submitting the form.
+  code - so you can confirm the mailbox login **without** submitting the form.
   A `535` / `EAUTH` here means the password is wrong or the mailbox isn't activated.
 - Sending tries port 465, and only falls back to 587 on a **connection** error.
   An **auth** failure (535 / bad password / inactive mailbox) fails the same way on
@@ -68,11 +68,11 @@ npm start        # serve production build
   180×180 `app/neetrick-icon.ico`.
 
 ## What's built
-- **Premium loader** — 0→100 counter, rotating kicker, shutter-panel reveal (first visit per session)
-- **Custom cursor** — magnetic dot + ring with `VIEW` labels on work items
-- **Sound system** — synthesized hover / click / shutter / scroll / counter / chime cues. Toggle top-right, off by default with a one-time nudge, choice saved to `localStorage`. Respects `prefers-reduced-motion`.
-- **Home** — Hero, Trust marquee, Intro statement, pinned Services, Selected Work (cursor-follow preview), horizontal-scroll Process, animated Stats counters, About teaser, Testimonials, Careers teaser, CTA
-- **Pages** — `/work` + case studies, `/services` + detail, `/about`, `/careers` + role detail, `/contact` (multi-field form), custom `404`
+- **Premium loader** - 0→100 counter, rotating kicker, shutter-panel reveal (first visit per session)
+- **Custom cursor** - magnetic dot + ring with `VIEW` labels on work items
+- **Sound system** - synthesized hover / click / shutter / scroll / counter / chime cues. Toggle top-right, off by default with a one-time nudge, choice saved to `localStorage`. Respects `prefers-reduced-motion`.
+- **Home** - Hero, Trust marquee, Intro statement, pinned Services, Selected Work (cursor-follow preview), horizontal-scroll Process, animated Stats counters, About teaser, Testimonials, Careers teaser, CTA
+- **Pages** - `/work` + case studies, `/services` + detail, `/about`, `/careers` + role detail, `/contact` (multi-field form), custom `404`
 
 ## Customizing
 
@@ -88,7 +88,7 @@ Edit the CSS variables in `app/globals.css`:
 ```css
 :root {
   --bg: #0a0a0b;
-  --accent: #c6f432;   /* the single accent — change to rebrand */
+  --accent: #c6f432;   /* the single accent - change to rebrand */
 }
 ```
 

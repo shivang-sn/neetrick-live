@@ -29,7 +29,7 @@ export default function ServicesSection() {
 
   return (
     <section className="section-pad">
-      <div className="kicker mb-12">02 — What we do</div>
+      <div className="kicker mb-12">02 - What we do</div>
       <div className="grid gap-16 md:grid-cols-[0.9fr_1.1fr]">
         {/* Sticky list */}
         <div className="hidden md:block">

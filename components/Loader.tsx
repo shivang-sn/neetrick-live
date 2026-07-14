@@ -22,11 +22,13 @@ export default function Loader() {
     let finished = false;
     let interval: ReturnType<typeof setInterval> | undefined;
     let finishTimer: ReturnType<typeof setTimeout> | undefined;
+    let safetyTimer: ReturnType<typeof setTimeout> | undefined;
 
     const finish = () => {
       if (finished) return;
       finished = true;
       if (interval) clearInterval(interval);
+      if (safetyTimer) clearTimeout(safetyTimer);
       setCount(100);
       setDone(true);
       play("shutter");
@@ -43,6 +45,12 @@ export default function Loader() {
       if (t >= 1) finish();
     }, 30);
 
+    // Hard ceiling: setInterval gets throttled to ~1/sec in a backgrounded
+    // or occluded tab, which can make the splash sit well past `total` ms.
+    // Guarantee it never blocks the site for more than a few seconds no
+    // matter what the browser does to the interval.
+    safetyTimer = setTimeout(finish, total + 1500);
+
     const esc = (e: KeyboardEvent) => {
       if (e.key === "Escape") finish();
     };
@@ -51,6 +59,7 @@ export default function Loader() {
     return () => {
       if (interval) clearInterval(interval);
       if (finishTimer) clearTimeout(finishTimer);
+      if (safetyTimer) clearTimeout(safetyTimer);
       window.removeEventListener("keydown", esc);
     };
   }, [play]);

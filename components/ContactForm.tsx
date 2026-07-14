@@ -30,8 +30,8 @@ export default function ContactForm({
 
   const toastHeading = compact ? "Application received!" : "Message sent!";
   const toastMessage = compact
-    ? "Thanks for applying — we'll review your profile and reach out if it's a match."
-    : "Thanks for reaching out — we'll get back to you within one business day.";
+    ? "Thanks for applying - we'll review your profile and reach out if it's a match."
+    : "Thanks for reaching out - we'll get back to you within one business day.";
 
   useEffect(() => {
     if (!toast) return;
@@ -303,7 +303,7 @@ export default function ContactForm({
       {compact && (
         <div>
           <label className="block text-sm text-muted">
-            <span className="mb-2 block">Updated CV — PDF or Word, max 5MB *</span>
+            <span className="mb-2 block">Updated CV - PDF or Word, max 5MB *</span>
             <input
               required
               type="file"

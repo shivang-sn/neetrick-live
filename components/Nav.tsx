@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { NAV_LINKS, SITE } from "@/lib/content";
 import { useSound } from "@/providers/SoundProvider";
 import Magnetic from "./Magnetic";
@@ -12,6 +13,11 @@ export default function Nav() {
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const { play } = useSound();
+  const pathname = usePathname();
+  // Work case-study pages have a full-bleed photo banner right behind the
+  // nav, so it needs its translucent background from the start - not just
+  // after scrolling - to stay legible over the image.
+  const isWorkDetail = /^\/work\/[^/]+/.test(pathname || "");
 
   useEffect(() => {
     let last = 0;
@@ -40,7 +46,7 @@ export default function Nav() {
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
           hidden ? "-translate-y-full" : "translate-y-0"
         } ${
-          scrolled && !open
+          (scrolled || isWorkDetail) && !open
             ? "bg-[color-mix(in_srgb,var(--bg)_70%,transparent)] backdrop-blur-xl border-b border-line"
             : "bg-transparent"
         }`}
@@ -96,7 +102,7 @@ export default function Nav() {
         </div>
       </header>
 
-      {/* Full-screen overlay menu — driven by inline styles so it never
+      {/* Full-screen overlay menu - driven by inline styles so it never
           depends on Tailwind JIT generating arbitrary clip-path utilities. */}
       <div
         className="fixed inset-0 z-40 overflow-hidden bg-bg"

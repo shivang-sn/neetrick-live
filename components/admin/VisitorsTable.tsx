@@ -1,0 +1,113 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+type VisitorRecord = {
+  id: string;
+  timestamp: string;
+  path: string;
+  ip: string;
+  city?: string;
+  region?: string;
+  country?: string;
+  gpsLat?: number;
+  gpsLon?: number;
+  area?: string;
+  pincode?: string;
+  os?: string;
+  browser?: string;
+  device?: string;
+};
+
+const POLL_MS = 4000;
+
+export default function VisitorsTable() {
+  const [visitors, setVisitors] = useState<VisitorRecord[]>([]);
+  const [error, setError] = useState("");
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const load = async () => {
+      try {
+        const res = await fetch("/api/admin/visitors-data", { cache: "no-store" });
+        if (res.status === 401) {
+          window.location.href = "/admin/login";
+          return;
+        }
+        const data = await res.json();
+        if (!cancelled && data.ok) {
+          setVisitors(data.visitors);
+          setError("");
+        }
+      } catch {
+        if (!cancelled) setError("Failed to load visitor data.");
+      } finally {
+        if (!cancelled) setLoaded(true);
+      }
+    };
+
+    load();
+    const interval = setInterval(load, POLL_MS);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, []);
+
+  return (
+    <div>
+      {error && <p className="mb-4 text-sm text-red-400">{error}</p>}
+      <div className="overflow-x-auto rounded-2xl border border-line">
+        <table className="w-full min-w-[960px] border-collapse text-sm">
+          <thead>
+            <tr className="border-b border-line text-left text-muted">
+              <th className="px-3 py-3">Time</th>
+              <th className="px-3 py-3">Page</th>
+              <th className="px-3 py-3">IP</th>
+              <th className="px-3 py-3">Location (IP)</th>
+              <th className="px-3 py-3">GPS</th>
+              <th className="px-3 py-3">Area / Pincode</th>
+              <th className="px-3 py-3">Device</th>
+              <th className="px-3 py-3">OS</th>
+              <th className="px-3 py-3">Browser</th>
+            </tr>
+          </thead>
+          <tbody>
+            {visitors.map((v) => (
+              <tr key={v.id} className="border-b border-line last:border-b-0">
+                <td className="whitespace-nowrap px-3 py-3">
+                  {new Date(v.timestamp).toLocaleString()}
+                </td>
+                <td className="px-3 py-3">{v.path}</td>
+                <td className="px-3 py-3">{v.ip}</td>
+                <td className="px-3 py-3">
+                  {[v.city, v.region, v.country].filter(Boolean).join(", ") || "-"}
+                </td>
+                <td className="px-3 py-3">
+                  {v.gpsLat != null && v.gpsLon != null
+                    ? `${v.gpsLat.toFixed(4)}, ${v.gpsLon.toFixed(4)}`
+                    : "-"}
+                </td>
+                <td className="px-3 py-3">
+                  {[v.area, v.pincode].filter(Boolean).join(" · ") || "-"}
+                </td>
+                <td className="px-3 py-3">{v.device || "desktop"}</td>
+                <td className="px-3 py-3">{v.os || "-"}</td>
+                <td className="px-3 py-3">{v.browser || "-"}</td>
+              </tr>
+            ))}
+            {loaded && visitors.length === 0 && (
+              <tr>
+                <td colSpan={9} className="px-3 py-10 text-center text-muted">
+                  No visitors recorded yet.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}

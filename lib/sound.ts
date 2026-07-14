@@ -1,5 +1,5 @@
 // Synthesized sound engine using the Web Audio API.
-// No external audio files required — every cue is generated on the fly.
+// No external audio files required - every cue is generated on the fly.
 
 export type SoundName =
   | "boot"

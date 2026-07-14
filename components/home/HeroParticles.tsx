@@ -12,7 +12,7 @@ export default function HeroParticles() {
 
   useEffect(() => {
     // The canvas is lightweight (bounded 2D work per frame) so it runs on all
-    // real devices — including reduced-motion ones, since motion is core to the
+    // real devices - including reduced-motion ones, since motion is core to the
     // design. Only genuinely ancient single-core devices fall back to the aurora.
     const cores =
       typeof navigator !== "undefined"
@@ -144,7 +144,7 @@ export default function HeroParticles() {
   }, [useCanvas]);
 
   if (!useCanvas) {
-    // Safe animated CSS aurora — no canvas/JS loop, cannot block anything.
+    // Safe animated CSS aurora - no canvas/JS loop, cannot block anything.
     return <div aria-hidden className="hero-aurora absolute inset-0" />;
   }
 

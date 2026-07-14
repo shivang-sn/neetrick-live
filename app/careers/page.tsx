@@ -6,14 +6,14 @@ import Marquee from "@/components/Marquee";
 import { ROLES } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Careers — Neetrick",
+  title: "Careers - Neetrick",
   description: "Build smarter with us. Open roles at Neetrick in Jamnagar & remote.",
 };
 
 const PERKS = [
   { title: "Real ownership", text: "Lead projects end-to-end, not just tickets." },
   { title: "Senior team", text: "Learn from people who've shipped a lot." },
-  { title: "Flexible work", text: "Jamnagar studio or remote — your call." },
+  { title: "Flexible work", text: "Jamnagar studio or remote - your call." },
   { title: "Growth budget", text: "Courses, tools, and conferences on us." },
 ];
 

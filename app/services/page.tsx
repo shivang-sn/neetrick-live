@@ -5,7 +5,7 @@ import Reveal from "@/components/Reveal";
 import { SERVICES } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Services — Neetrick",
+  title: "Services - Neetrick",
   description: "IT and marketing services: web, apps, branding, ads, SEO, cloud.",
 };
 

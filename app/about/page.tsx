@@ -4,13 +4,13 @@ import Reveal from "@/components/Reveal";
 import { VALUES } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "About — Neetrick",
+  title: "About - Neetrick",
   description: "An IT + marketing studio headquartered in Jamnagar, Gujarat.",
 };
 
 const TIMELINE = [
   { year: "2016", text: "Founded in Jamnagar as a two-person web studio." },
-  { year: "2019", text: "Added performance marketing — full-funnel from day one." },
+  { year: "2019", text: "Added performance marketing - full-funnel from day one." },
   { year: "2022", text: "Grew into a senior, multi-disciplinary team." },
   { year: "2025", text: "Serving brands across India and beyond." },
 ];
@@ -33,7 +33,7 @@ export default function AboutPage() {
         </h2>
         <p className="text-fluid-body text-muted">
           Most agencies are good at one thing. We built Neetrick to be good at
-          the whole journey — brand, product, and growth — so ambitious teams
+          the whole journey - brand, product, and growth - so ambitious teams
           don&apos;t have to stitch five vendors together. From our base on the
           coast of Gujarat, we ship work that&apos;s as effective as it is
           beautiful.

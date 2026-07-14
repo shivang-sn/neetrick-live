@@ -5,7 +5,7 @@ import Faq from "@/components/Faq";
 import { SITE } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Contact — Neetrick",
+  title: "Contact - Neetrick",
   description: "Tell us about your project. Based in Jamnagar, Gujarat.",
 };
 

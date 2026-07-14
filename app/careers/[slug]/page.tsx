@@ -25,24 +25,24 @@ export default function RoleDetail({ params }: { params: { slug: string } }) {
             <div className="kicker mb-3">About the role</div>
             <p className="text-fluid-body text-muted">
               You&apos;ll join a small, senior team and own work end-to-end. We
-              care about craft, speed, and outcomes — and we give you the room to
+              care about craft, speed, and outcomes - and we give you the room to
               do your best work.
             </p>
           </div>
           <div>
             <div className="kicker mb-3">What you&apos;ll do</div>
             <ul className="space-y-2 text-muted">
-              <li>— Lead projects from brief to launch</li>
-              <li>— Collaborate across design, engineering, and marketing</li>
-              <li>— Push the quality bar on everything we ship</li>
+              <li>- Lead projects from brief to launch</li>
+              <li>- Collaborate across design, engineering, and marketing</li>
+              <li>- Push the quality bar on everything we ship</li>
             </ul>
           </div>
           <div>
             <div className="kicker mb-3">What we look for</div>
             <ul className="space-y-2 text-muted">
-              <li>— 3+ years of relevant experience</li>
-              <li>— A portfolio you&apos;re proud of</li>
-              <li>— Ownership mindset and sharp communication</li>
+              <li>- 3+ years of relevant experience</li>
+              <li>- A portfolio you&apos;re proud of</li>
+              <li>- Ownership mindset and sharp communication</li>
             </ul>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import HeroV2 from "@/components/home/HeroV2";
+import Hero from "@/components/home/Hero";
 import Trust from "@/components/home/Trust";
 import Intro from "@/components/home/Intro";
 import ServicesSection from "@/components/home/ServicesSection";
@@ -11,10 +11,10 @@ import Testimonials from "@/components/home/Testimonials";
 import CareersTeaser from "@/components/home/CareersTeaser";
 import CTASection from "@/components/home/CTASection";
 
-export default function HomeV2() {
+export default function HomeBkp() {
   return (
     <>
-      <HeroV2 />
+      <Hero />
       <Trust />
       <Intro />
       <ServicesSection />

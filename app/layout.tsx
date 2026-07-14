@@ -9,6 +9,9 @@ import Loader from "@/components/Loader";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+import CookieConsent from "@/components/CookieConsent";
+import VisitorTracker from "@/components/VisitorTracker";
+import DevToolsGuard from "@/components/DevToolsGuard";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
@@ -25,11 +28,15 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Neetrick — Smart tricks. Better everyday.",
+  title: "Neetrick - Smart tricks. Better everyday.",
   description:
     "An IT + marketing studio in Jamnagar building brands, products, and growth engines that actually move numbers.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
   openGraph: {
-    title: "Neetrick — Smart tricks. Better everyday.",
+    title: "Neetrick - Smart tricks. Better everyday.",
     description:
       "IT + marketing studio in Jamnagar, Gujarat. Brand, build, and grow with one partner.",
     type: "website",
@@ -56,6 +63,9 @@ export default function RootLayout({
               <Footer />
               <BackToTop />
             </SmoothScroll>
+            <CookieConsent />
+            <VisitorTracker />
+            <DevToolsGuard />
           </SoundProvider>
         </ThemeProvider>
       </body>

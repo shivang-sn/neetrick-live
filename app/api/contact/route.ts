@@ -20,7 +20,7 @@ function makeTransport(port: number): Transporter {
 }
 
 // An auth failure (bad password / inactive mailbox) will fail identically on the
-// other port, so we must NOT retry it — only retry genuine connection problems.
+// other port, so we must NOT retry it - only retry genuine connection problems.
 const CONNECTION_ERRORS = new Set([
   "ECONNECTION",
   "ETIMEDOUT",
@@ -261,12 +261,12 @@ export async function POST(req: Request) {
 
   const to = CONTACT_TO || SMTP_USER || "sales@neetrick.com";
   const when = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-  const interests = (body.interests || []).join(", ") || "—";
+  const interests = (body.interests || []).join(", ") || "-";
 
   const row = (label: string, value?: string) =>
     `<tr>
        <td style="padding:8px 12px;background:#f6f5f2;font-weight:600;white-space:nowrap;vertical-align:top">${label}</td>
-       <td style="padding:8px 12px;border-bottom:1px solid #eee">${esc(value || "—")}</td>
+       <td style="padding:8px 12px;border-bottom:1px solid #eee">${esc(value || "-")}</td>
      </tr>`;
 
   const cvBuffer = cvFile ? Buffer.from(await cvFile.arrayBuffer()) : null;
@@ -275,13 +275,13 @@ export async function POST(req: Request) {
   // Two entirely separate templates/subjects so a sales lead and a job
   // application never look like the same email in the inbox.
   const subject = isCareers
-    ? `New application — ${body.role || "Role not specified"} — ${name}`
-    : `New sales enquiry from ${name} — Neetrick.com`;
+    ? `New application - ${body.role || "Role not specified"} - ${name}`
+    : `New sales enquiry from ${name} - Neetrick.com`;
 
   const html = isCareers
     ? `
   <div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:auto;color:#111">
-    <h2 style="margin:0 0 4px">New job application — Neetrick.com</h2>
+    <h2 style="margin:0 0 4px">New job application - Neetrick.com</h2>
     <p style="margin:0 0 4px;color:#666;font-size:13px">${esc(when)} IST</p>
     <p style="margin:0 0 16px;font-weight:600">${esc(body.role || "Role not specified")}</p>
     <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -297,11 +297,11 @@ export async function POST(req: Request) {
       ${row("Portfolio", body.portfolio)}
       ${row("Message", message)}
     </table>
-    <p style="margin-top:16px;color:#666;font-size:13px">CV attached${cvFile ? ` — ${esc(cvName)}` : ""}.</p>
+    <p style="margin-top:16px;color:#666;font-size:13px">CV attached${cvFile ? ` - ${esc(cvName)}` : ""}.</p>
   </div>`
     : `
   <div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:auto;color:#111">
-    <h2 style="margin:0 0 4px">New sales enquiry — Neetrick.com</h2>
+    <h2 style="margin:0 0 4px">New sales enquiry - Neetrick.com</h2>
     <p style="margin:0 0 16px;color:#666;font-size:13px">${esc(when)} IST</p>
     <table style="width:100%;border-collapse:collapse;font-size:14px">
       ${row("Name", name)}
@@ -347,7 +347,7 @@ export async function POST(req: Request) {
     );
   }
 
-  // ---------- 2) Resend (primary when a key is set — most reliable, no SMTP) ----
+  // ---------- 2) Resend (primary when a key is set - most reliable, no SMTP) ----
   if (process.env.RESEND_API_KEY) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
@@ -406,7 +406,7 @@ export async function POST(req: Request) {
           "response=", lastErr.response,
           "command=", lastErr.command
         );
-        // Auth failures fail the same way on the other port — stop retrying.
+        // Auth failures fail the same way on the other port - stop retrying.
         if (!isConnectionError(lastErr)) break;
       }
     }

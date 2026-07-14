@@ -5,7 +5,7 @@ import Reveal from "@/components/Reveal";
 import { WORK } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Work — Neetrick",
+  title: "Work - Neetrick",
   description: "Selected projects across web, branding, apps, and marketing.",
 };
 
@@ -25,18 +25,23 @@ export default function WorkPage() {
               data-cursor="view"
               data-cursor-label="View"
               className="group block overflow-hidden rounded-xl"
+              style={{border: "5px solid " + w.color ,boxShadow: "5px 5px 5px" + w.color }}
             >
               <div
                 className="flex aspect-[4/3] items-center justify-center transition-transform duration-700 group-hover:scale-105"
-                style={{ background: w.color }}
+                style={{
+                  backgroundColor: w.color,
+                  backgroundImage: `url(${w.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
               >
-                <span className="display text-4xl text-[color-mix(in_srgb,var(--text)_80%,transparent)]">{w.name}</span>
               </div>
-              <div className="mt-4 flex items-center justify-between">
+              <div className="mt-4 flex items-center justify-between pl-4 pr-4" >
                 <h3 className="display text-2xl">{w.name}</h3>
                 <span className="kicker">{w.year}</span>
               </div>
-              <div className="mt-2 flex gap-2">
+              <div className="mt-2 flex gap-2 pl-4 pr-4 pb-4">
                 {w.tags.map((t) => (
                   <span key={t} className="kicker">
                     {t}

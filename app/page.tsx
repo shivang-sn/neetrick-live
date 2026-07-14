@@ -1,4 +1,4 @@
-import Hero from "@/components/home/Hero";
+import HeroV2 from "@/components/home/HeroV2";
 import Trust from "@/components/home/Trust";
 import Intro from "@/components/home/Intro";
 import ServicesSection from "@/components/home/ServicesSection";
@@ -14,7 +14,7 @@ import CTASection from "@/components/home/CTASection";
 export default function Home() {
   return (
     <>
-      <Hero />
+      <HeroV2 />
       <Trust />
       <Intro />
       <ServicesSection />

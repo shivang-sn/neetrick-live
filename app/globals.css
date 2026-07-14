@@ -226,7 +226,7 @@ html.lenis body {
   }
 }
 
-/* Hero animated aurora — CSS-only fallback for the particle background on
+/* Hero animated aurora - CSS-only fallback for the particle background on
    reduced-motion / low-power devices (cannot block the main thread). */
 .hero-aurora {
   pointer-events: none;
@@ -248,7 +248,7 @@ html.lenis body {
   }
 }
 
-/* HeroV2 — giant drifting ghost typography background (Option 3) */
+/* HeroV2 - giant drifting ghost typography background (Option 3) */
 .hero-ghost-row {
   position: absolute;
   left: 0;
@@ -282,7 +282,7 @@ html.lenis body {
   background: radial-gradient(circle, #c9a8ff, #743bfb);
 }
 
-/* HeroV2 — RGB-split glitch on headline hover (Option 3) */
+/* HeroV2 - RGB-split glitch on headline hover (Option 3) */
 .glitch-line {
   position: relative;
   display: block;

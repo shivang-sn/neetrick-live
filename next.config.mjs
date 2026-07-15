@@ -6,17 +6,6 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["geoip-lite"],
   },
-  // /api/track writes to data/visitors.json on every page view. Without this,
-  // webpack's dev watcher (which ignores .gitignore) sees that write, triggers
-  // a recompile/reload, which remounts VisitorTracker, which writes again -
-  // an infinite reload loop that made every page look hung.
-  webpack: (config) => {
-    config.watchOptions = {
-      ...config.watchOptions,
-      ignored: ["**/node_modules/**", "**/.git/**", "**/.next/**", "**/data/**"],
-    };
-    return config;
-  },
 };
 
 export default nextConfig;

@@ -1,11 +1,14 @@
-import fs from "fs";
-import path from "path";
+import { Redis } from "@upstash/redis";
 
-// Simple JSON-file visitor log. Fine for a low-traffic single-instance
-// deployment; if you move to serverless/multi-instance hosting, swap this
-// for a real database - the filesystem here won't be shared or persistent.
-const DATA_DIR = path.join(process.cwd(), "data");
-const DATA_FILE = path.join(DATA_DIR, "visitors.json");
+// Vercel serverless functions run on a read-only filesystem, so visitor
+// records can't live in a local JSON file (that only worked in local dev).
+// Stored as a capped Redis list instead - durable across deploys/invocations.
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
+});
+
+const VISITORS_KEY = "visitors";
 const MAX_RECORDS = 2000;
 
 export type VisitorRecord = {
@@ -27,31 +30,15 @@ export type VisitorRecord = {
   device?: string;
 };
 
-function ensureFile() {
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-  if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, "[]", "utf-8");
+export async function appendVisitor(record: VisitorRecord) {
+  await redis.lpush(VISITORS_KEY, record);
+  await redis.ltrim(VISITORS_KEY, 0, MAX_RECORDS - 1);
 }
 
-export function appendVisitor(record: VisitorRecord) {
-  ensureFile();
-  let list: VisitorRecord[] = [];
-  try {
-    list = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
-  } catch {
-    list = [];
-  }
-  list.push(record);
-  if (list.length > MAX_RECORDS) {
-    list = list.slice(list.length - MAX_RECORDS);
-  }
-  fs.writeFileSync(DATA_FILE, JSON.stringify(list, null, 2), "utf-8");
-}
-
-export function readVisitors(): VisitorRecord[] {
-  ensureFile();
-  try {
-    return JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
-  } catch {
-    return [];
-  }
+export async function readVisitors(): Promise<VisitorRecord[]> {
+  const records = await redis.lrange<VisitorRecord>(VISITORS_KEY, 0, -1);
+  // LPUSH puts the newest record at the head of the list; reverse so this
+  // keeps the same oldest-first contract the previous fs-based version
+  // returned (callers reverse again themselves for newest-first display).
+  return records.reverse();
 }

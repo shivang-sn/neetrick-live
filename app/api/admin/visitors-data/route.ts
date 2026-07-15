@@ -10,6 +10,11 @@ export async function GET() {
   if (!verifySessionToken(token)) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
-  const visitors = readVisitors().slice().reverse();
-  return NextResponse.json({ ok: true, visitors });
+  try {
+    const visitors = (await readVisitors()).slice().reverse();
+    return NextResponse.json({ ok: true, visitors });
+  } catch (err) {
+    console.error("[visitors-data] failed to read visitors:", err);
+    return NextResponse.json({ ok: false, error: "Failed to load visitor data." }, { status: 500 });
+  }
 }

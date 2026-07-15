@@ -61,24 +61,29 @@ export async function POST(req: Request) {
   const hasGps = typeof body.gpsLat === "number" && typeof body.gpsLon === "number";
   const reverse = hasGps ? await reverseGeocode(body.gpsLat!, body.gpsLon!) : null;
 
-  appendVisitor({
-    id: randomUUID(),
-    timestamp: new Date().toISOString(),
-    path: body.path || "/",
-    ip,
-    city: reverse?.city || geo?.city || undefined,
-    region: reverse?.state || geo?.region || undefined,
-    country: geo?.country || undefined,
-    lat: geo?.ll?.[0],
-    lon: geo?.ll?.[1],
-    gpsLat: hasGps ? body.gpsLat : undefined,
-    gpsLon: hasGps ? body.gpsLon : undefined,
-    area: reverse?.area,
-    pincode: reverse?.pincode,
-    os: os.name ? `${os.name} ${os.version || ""}`.trim() : undefined,
-    browser: browser.name ? `${browser.name} ${browser.version || ""}`.trim() : undefined,
-    device: device.type || "desktop",
-  });
+  try {
+    await appendVisitor({
+      id: randomUUID(),
+      timestamp: new Date().toISOString(),
+      path: body.path || "/",
+      ip,
+      city: reverse?.city || geo?.city || undefined,
+      region: reverse?.state || geo?.region || undefined,
+      country: geo?.country || undefined,
+      lat: geo?.ll?.[0],
+      lon: geo?.ll?.[1],
+      gpsLat: hasGps ? body.gpsLat : undefined,
+      gpsLon: hasGps ? body.gpsLon : undefined,
+      area: reverse?.area,
+      pincode: reverse?.pincode,
+      os: os.name ? `${os.name} ${os.version || ""}`.trim() : undefined,
+      browser: browser.name ? `${browser.name} ${browser.version || ""}`.trim() : undefined,
+      device: device.type || "desktop",
+    });
+  } catch (err) {
+    console.error("[track] failed to store visitor:", err);
+    return NextResponse.json({ ok: false }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }

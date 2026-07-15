@@ -13,6 +13,7 @@
     "@tsparticles/engine": "^4.3.1",
     "@tsparticles/react": "^4.3.1",
     "@tsparticles/slim": "^4.3.1",
+    "@upstash/redis": "^1.38.0",
     "framer-motion": "^11.3.8",
     "geoip-lite": "^2.0.3",
     "gsap": "^3.12.5",

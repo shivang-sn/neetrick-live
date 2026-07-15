@@ -23,7 +23,7 @@ export default function AdminVisitorsPage() {
           <div>
             <h1 className="display text-2xl">Visitor data</h1>
             <p className="mt-1 text-sm text-muted">
-              Updates automatically every few seconds.
+              Live - new visitors appear in real time.
             </p>
           </div>
           <LogoutButton />

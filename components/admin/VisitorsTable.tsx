@@ -19,45 +19,69 @@ type VisitorRecord = {
   device?: string;
 };
 
-const POLL_MS = 4000;
-
 export default function VisitorsTable() {
   const [visitors, setVisitors] = useState<VisitorRecord[]>([]);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [connected, setConnected] = useState(false);
+  const [flashIds, setFlashIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    let cancelled = false;
+    const source = new EventSource("/api/admin/visitors-stream");
 
-    const load = async () => {
-      try {
-        const res = await fetch("/api/admin/visitors-data", { cache: "no-store" });
-        if (res.status === 401) {
-          window.location.href = "/admin/login";
-          return;
-        }
-        const data = await res.json();
-        if (!cancelled && data.ok) {
-          setVisitors(data.visitors);
-          setError("");
-        }
-      } catch {
-        if (!cancelled) setError("Failed to load visitor data.");
-      } finally {
-        if (!cancelled) setLoaded(true);
-      }
+    source.addEventListener("init", (e) => {
+      const data = JSON.parse((e as MessageEvent).data) as VisitorRecord[];
+      setVisitors(data);
+      setError("");
+      setLoaded(true);
+      setConnected(true);
+    });
+
+    source.addEventListener("visitor", (e) => {
+      const v = JSON.parse((e as MessageEvent).data) as VisitorRecord;
+      setVisitors((prev) => [v, ...prev]);
+      setFlashIds((prev) => new Set(prev).add(v.id));
+      setTimeout(() => {
+        setFlashIds((prev) => {
+          const next = new Set(prev);
+          next.delete(v.id);
+          return next;
+        });
+      }, 2000);
+    });
+
+    source.addEventListener("error", (e) => {
+      // A named "error" SSE event from the server (a Redis read failure
+      // mid-stream) - distinct from EventSource's own connection onerror.
+      if ((e as MessageEvent).data) setError("Failed to load visitor data.");
+    });
+
+    source.onerror = () => {
+      // The stream closes every ~45s by design (Vercel function duration
+      // limit) and EventSource reconnects automatically - this just means
+      // "briefly between streams," not a real failure.
+      setConnected(false);
     };
 
-    load();
-    const interval = setInterval(load, POLL_MS);
-    return () => {
-      cancelled = true;
-      clearInterval(interval);
-    };
+    return () => source.close();
   }, []);
 
   return (
     <div>
+      <div className="mb-4 flex items-center gap-2 text-xs text-muted">
+        <span className="relative flex h-2 w-2">
+          {connected && (
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+          )}
+          <span
+            className={`relative inline-flex h-2 w-2 rounded-full ${
+              connected ? "bg-accent" : "bg-muted"
+            }`}
+          />
+        </span>
+        {connected ? "Live" : "Connecting..."}
+      </div>
+
       {error && <p className="mb-4 text-sm text-red-400">{error}</p>}
       <div className="overflow-x-auto rounded-2xl border border-line">
         <table className="w-full min-w-[960px] border-collapse text-sm">
@@ -76,7 +100,12 @@ export default function VisitorsTable() {
           </thead>
           <tbody>
             {visitors.map((v) => (
-              <tr key={v.id} className="border-b border-line last:border-b-0">
+              <tr
+                key={v.id}
+                className={`border-b border-line transition-colors duration-1000 last:border-b-0 ${
+                  flashIds.has(v.id) ? "bg-accent/10" : ""
+                }`}
+              >
                 <td className="whitespace-nowrap px-3 py-3">
                   {new Date(v.timestamp).toLocaleString()}
                 </td>

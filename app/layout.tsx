@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { SoundProvider } from "@/providers/SoundProvider";
@@ -68,6 +69,7 @@ export default function RootLayout({
             <DevToolsGuard />
           </SoundProvider>
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );

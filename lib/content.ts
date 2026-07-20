@@ -89,6 +89,57 @@ export const SERVICES: {
   },
   {
     no: "02",
+    slug: "web-design",
+    title: "Web Design & UI/UX",
+    promise: "Interfaces people actually enjoy using - designed, not just built.",
+    deliverables: ["Website design", "UI/UX design", "Site redesigns"],
+    detail: {
+      introHeading: "Design That Makes People Stay",
+      introParagraphs: [
+        "A site that's technically well-built can still lose visitors in the first five seconds if it looks dated, confusing, or generic. Design is what makes someone trust you enough to scroll, click, and buy.",
+        "At NEETRICK, we design before we build - wireframes, user flows, and visual systems crafted around how people actually behave, not just what looks good in a mockup.",
+        "Whether you need a brand-new site designed from scratch or a tired one rebuilt into something modern, we design experiences that convert, not just decorate.",
+      ],
+      buildTitle: "What We Design",
+      buildItems: [
+        {
+          title: "Website Design",
+          text: "Custom-designed sites built around your brand, not a templated theme.",
+          items: ["Landing Pages", "Marketing Sites", "E-commerce Design", "Design Systems", "Responsive Layouts"],
+        },
+        {
+          title: "Site Redesigns",
+          text: "Rebuilding an existing site's look, feel, and flow without losing what already works.",
+          items: ["Visual Refresh", "Information Architecture", "Conversion-Focused Redesign", "Content Migration", "SEO-Safe Rebuilds"],
+        },
+        {
+          title: "UI/UX Design",
+          items: ["User Research", "Wireframing", "Prototyping", "Interaction Design", "Usability Testing"],
+        },
+        {
+          title: "Design Systems & Handoff",
+          items: ["Component Libraries", "Figma Design Files", "Developer Handoff", "Accessibility Standards"],
+        },
+      ],
+      gridTitle: "Design Toolkit",
+      gridGroups: [
+        { title: "Design", items: ["Figma", "Adobe XD", "Photoshop", "Illustrator"] },
+        { title: "Prototyping", items: ["Figma Prototypes", "Framer", "Principle"] },
+        { title: "Handoff", items: ["Figma Dev Mode", "Zeplin", "Storybook"] },
+      ],
+      process: [
+        { no: "01", title: "Discovery & Research", text: "Understanding your users, goals, and what's actually holding the current experience back." },
+        { no: "02", title: "Wireframes & Flows", text: "Mapping the structure and user journeys before any visual design starts." },
+        { no: "03", title: "Visual Design", text: "Applying your brand into high-fidelity screens, states, and components." },
+        { no: "04", title: "Prototyping & Testing", text: "Interactive prototypes tested with real users before a single line of code is written." },
+        { no: "05", title: "Handoff & Launch", text: "Developer-ready files, design systems, and support through build." },
+      ],
+      ctaTitle: "Ready for a Site People Actually Enjoy Using?",
+      ctaText: "From a first design to a full redesign, we build interfaces that make people trust you enough to stay.",
+    },
+  },
+  {
+    no: "03",
     slug: "brand-identity",
     title: "Brand & Identity",
     promise: "Distinctive brands that are impossible to ignore.",
@@ -139,7 +190,7 @@ export const SERVICES: {
     },
   },
   {
-    no: "03",
+    no: "04",
     slug: "performance-marketing",
     title: "Performance Marketing",
     promise: "Paid growth tuned for real return on every rupee.",
@@ -188,7 +239,7 @@ export const SERVICES: {
     },
   },
   {
-    no: "04",
+    no: "05",
     slug: "seo-content",
     title: "SEO & Content",
     promise: "Compounding organic traffic that keeps paying.",
@@ -237,7 +288,7 @@ export const SERVICES: {
     },
   },
   {
-    no: "05",
+    no: "06",
     slug: "social-creative",
     title: "Social & Creative",
     promise: "Scroll-stopping creative built for the feed.",
@@ -283,55 +334,6 @@ export const SERVICES: {
       ],
       ctaTitle: "Ready for Content People Actually Stop For?",
       ctaText: "From strategy to the final cut, we build social and creative that earns attention instead of asking for it.",
-    },
-  },
-  {
-    no: "06",
-    slug: "it-cloud",
-    title: "IT & Cloud Solutions",
-    promise: "Reliable infrastructure that just works.",
-    deliverables: ["Cloud & DevOps", "Automation", "Support"],
-    detail: {
-      introHeading: "Reliable Infrastructure That Just Works",
-      introParagraphs: [
-        "Downtime, slow servers, and security gaps aren't just IT problems - they're lost revenue and lost trust. Infrastructure should be invisible until you need to scale it.",
-        "At NEETRICK, we design, migrate, and manage cloud infrastructure built for uptime, security, and growth, backed by monitoring that catches issues before your customers do.",
-        "Whether you're migrating off legacy servers or scaling an existing cloud setup, we build infrastructure that just works.",
-      ],
-      buildTitle: "What We Manage",
-      buildItems: [
-        {
-          title: "Cloud Infrastructure",
-          items: ["Cloud Migration", "Server Architecture", "Load Balancing", "Auto-Scaling", "Backup & Disaster Recovery"],
-        },
-        {
-          title: "DevOps & Automation",
-          items: ["CI/CD Pipelines", "Infrastructure as Code", "Containerization", "Monitoring & Alerts", "Automated Deployments"],
-        },
-        {
-          title: "Security & Compliance",
-          items: ["Firewall Configuration", "SSL & Encryption", "Access Control", "Vulnerability Audits", "Data Compliance"],
-        },
-        {
-          title: "IT Support & Maintenance",
-          items: ["24/7 Monitoring", "Helpdesk Support", "System Updates", "Performance Tuning", "Incident Response"],
-        },
-      ],
-      gridTitle: "Technology Stack",
-      gridGroups: [
-        { title: "Cloud", items: ["AWS", "Google Cloud", "Azure", "DigitalOcean"] },
-        { title: "DevOps", items: ["Docker", "Kubernetes", "GitHub Actions", "Terraform"] },
-        { title: "Monitoring", items: ["Grafana", "Datadog", "UptimeRobot"] },
-      ],
-      process: [
-        { no: "01", title: "Infrastructure Audit", text: "Assessing current systems, security posture, and scalability gaps." },
-        { no: "02", title: "Architecture & Planning", text: "Designing a cloud architecture built for uptime, security, and growth." },
-        { no: "03", title: "Migration & Setup", text: "Migrating workloads, configuring environments, and automating deployments." },
-        { no: "04", title: "Testing & Hardening", text: "Load testing, security hardening, and disaster-recovery drills." },
-        { no: "05", title: "Monitor & Support", text: "24/7 monitoring, proactive maintenance, and rapid incident response." },
-      ],
-      ctaTitle: "Ready for Infrastructure You Don't Have to Think About?",
-      ctaText: "From migration to 24/7 monitoring, we build and manage infrastructure that just works.",
     },
   },
 ];

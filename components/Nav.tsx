@@ -63,13 +63,13 @@ export default function Nav() {
               <img
                 src="/brand/light-header-logo.svg"
                 alt="Neetrick"
-                className="logo-dark h-7 w-auto md:h-8"
+                className="logo-dark h-6 w-auto md:h-8"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/brand/dark-header-logo.svg"
                 alt="Neetrick"
-                className="logo-light h-7 w-auto md:h-8"
+                className="logo-light h-6 w-auto md:h-8"
               />
             </Link>
           </Magnetic>

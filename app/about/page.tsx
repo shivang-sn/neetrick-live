@@ -8,11 +8,32 @@ export const metadata: Metadata = {
   description: "An IT + marketing studio headquartered in Jamnagar, Gujarat.",
 };
 
-const TIMELINE = [
-  { year: "2016", text: "Founded in Jamnagar as a two-person web studio." },
-  { year: "2019", text: "Added performance marketing - full-funnel from day one." },
-  { year: "2022", text: "Grew into a senior, multi-disciplinary team." },
-  { year: "2025", text: "Serving brands across India and beyond." },
+const TRENDS = [
+  {
+    no: "01",
+    title: "AI-Native Products",
+    text: "We build AI into the product itself - personalization, automation, and smart workflows - instead of bolting on a chatbot after launch.",
+  },
+  {
+    no: "02",
+    title: "Headless & Composable",
+    text: "Decoupled front-ends and composable commerce stacks that scale without vendor lock-in.",
+  },
+  {
+    no: "03",
+    title: "Motion-First Design",
+    text: "Interfaces that respond, animate, and feel alive - not static pages people scroll past.",
+  },
+  {
+    no: "04",
+    title: "Privacy-First Marketing",
+    text: "First-party data and consent-driven tracking, built for a cookieless web.",
+  },
+  {
+    no: "05",
+    title: "Performance as a Feature",
+    text: "Core Web Vitals and load speed treated as a growth lever, not an afterthought.",
+  },
 ];
 
 export default function AboutPage() {
@@ -57,15 +78,18 @@ export default function AboutPage() {
       </section>
 
       <section className="section-pad">
-        <div className="kicker mb-10">Our journey</div>
-        {TIMELINE.map((t, i) => (
+        <div className="kicker mb-10">What&apos;s shaping our work</div>
+        {TRENDS.map((t, i) => (
           <Reveal
-            key={t.year}
+            key={t.no}
             delay={i * 0.05}
-            className="grid grid-cols-[auto_1fr] gap-8 border-t border-line py-8"
+            className="grid grid-cols-[auto_1fr] gap-8 border-t border-line py-8 last:border-b"
           >
-            <span className="display text-3xl text-accent">{t.year}</span>
-            <p className="text-fluid-body text-muted">{t.text}</p>
+            <span className="kicker text-accent">{t.no}</span>
+            <div>
+              <h3 className="display text-2xl">{t.title}</h3>
+              <p className="mt-2 text-fluid-body text-muted">{t.text}</p>
+            </div>
           </Reveal>
         ))}
       </section>

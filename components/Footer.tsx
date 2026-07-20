@@ -19,13 +19,13 @@ export default function Footer() {
             <img
               src="/brand/light-footer-logo.svg"
               alt="Neetrick"
-              className="logo-dark h-34 w-auto sm:h-24 md:h-34"
+              className="logo-dark h-16 w-auto md:h-[8.5rem]"
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/brand/dark-footer-logo.svg"
               alt="Neetrick"
-              className="logo-light h-34 w-auto sm:h-24 md:h-34"
+              className="logo-light h-16 w-auto md:h-[8.5rem]"
             />
           </div>
           <div className="text-center">
@@ -69,7 +69,7 @@ export default function Footer() {
           <div className="text-center">
             <div className="kicker mb-4">Services</div>
             <ul className="space-y-2">
-              {SERVICES.slice(0, 5).map((s) => (
+              {SERVICES.map((s) => (
                 <li key={s.slug}>
                   <Link
                     href={`/services/${s.slug}`}
